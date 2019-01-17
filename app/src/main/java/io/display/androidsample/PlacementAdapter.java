@@ -6,11 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class PlacementListAdapter extends RecyclerView.Adapter<PlacementListAdapter.MyViewHolder> {
+public class PlacementAdapter extends RecyclerView.Adapter<PlacementAdapter.MyViewHolder> {
 
     private PlacementItem[] data;
 
-    public PlacementListAdapter(PlacementItem[] data) {
+    public PlacementAdapter(PlacementItem[] data) {
         this.data = data;
     }
 
@@ -28,7 +28,7 @@ public class PlacementListAdapter extends RecyclerView.Adapter<PlacementListAdap
     }
 
     @Override
-    public PlacementListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PlacementAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
         return new MyViewHolder(v);
     }
