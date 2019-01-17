@@ -1,1 +1,1 @@
-# android-sample2
+# Android Sample
