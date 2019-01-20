@@ -1,8 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#00ff00">
+    android:orientation="horizontal"
+    >
 
-</FrameLayout>
+    <Button
+        android:id="@+id/button_load_interstitial"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="LOAD"/>
+
+    <Button
+        android:id="@+id/button_show_interstitial"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:text="SHOW"/>
+
+</LinearLayout>

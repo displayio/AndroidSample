@@ -11,19 +11,38 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import io.display.androidsample.utils.FragmentHelper;
 
 public class InterstitialFragment extends Fragment {
 
+    Button loadButton;
+    Button showButton;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View contentView = inflater.inflate(R.layout.fragment_interstitial, container, false);
-
         Bundle args = getArguments();
         String placementId = args.getString("placementId");
-        Log.i("XXX", "PLACEMENT ID: " + placementId);
+
+        View contentView = inflater.inflate(R.layout.fragment_interstitial, container, false);
+        loadButton = contentView.findViewById(R.id.button_load_interstitial);
+        showButton = contentView.findViewById(R.id.button_show_interstitial);
+
+        loadButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("XXX", "LOAD");
+            }
+        });
+
+        showButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.e("XXX", "SHOW");
+            }
+        });
 
         return contentView;
     }
