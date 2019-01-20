@@ -29,7 +29,7 @@ public class PlacementAdapter extends RecyclerView.Adapter<PlacementAdapter.MyVi
 
     @Override
     public PlacementAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item, parent, false);
+        View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_main, parent, false);
         return new MyViewHolder(v);
     }
 
