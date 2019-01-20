@@ -9,8 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import java.util.Arrays;
-import java.util.List;
+import java.util.ArrayList;
 
 import io.display.sdk.AdProvider;
 import io.display.sdk.AdRequest;
@@ -109,15 +108,10 @@ public class BannerActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.recycler_view_banner);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-        List<String> items = Arrays.asList(
-                "content item 1",
-                "content item 2",
-                "content item 3",
-                "content item 4",
-                "content item 5",
-                "content item 6",
-                "content item 7",
-                "content item 8");
+        ArrayList<String> items = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) {
+            items.add("Content item " + i);
+        }
 
         recyclerView.setAdapter(new BannerListAdapter(items, 2, placementId, requestId));
     }

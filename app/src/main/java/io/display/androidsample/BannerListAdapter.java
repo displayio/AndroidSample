@@ -22,9 +22,8 @@ public class BannerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     private static final String TAG = "BannerListAdapter";
 
-    // TODO: Use Enum
-    private static final byte AD_VIEW_TYPE = 0;
-    private static final byte SIMPLE_VIEW_TYPE = 1;
+    private static final int TYPE_AD = 0;
+    private static final int TYPE_CONTENT = 1;
 
     private String placementId;
     private String requestId;
@@ -45,7 +44,7 @@ public class BannerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext().getApplicationContext();
         switch (viewType) {
-            case AD_VIEW_TYPE:
+            case TYPE_AD:
                 return new AdViewHolder(BannerAdContainer.getAdView(context));
             default:
                 return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_banner, parent, false));
@@ -55,15 +54,15 @@ public class BannerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public int getItemViewType(int position) {
         if (items.get(position) == null) {
-            return AD_VIEW_TYPE;
+            return TYPE_AD;
         } else {
-            return SIMPLE_VIEW_TYPE;
+            return TYPE_CONTENT;
         }
     }
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
-        if (holder.getItemViewType() == AD_VIEW_TYPE && holder instanceof AdViewHolder) {
+        if (holder.getItemViewType() == TYPE_AD && holder instanceof AdViewHolder) {
             try {
                 BannerAdContainer bannerContainer = ((BannerPlacement) Controller.getInstance().getPlacement(placementId)).getBannerContainer(context, requestId);
                 bannerContainer.bindTo((RelativeLayout) holder.itemView);
