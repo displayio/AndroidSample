@@ -14,14 +14,14 @@ import io.display.sdk.listeners.SdkInitListener;
 
 public class MainActivity extends AppCompatActivity {
 
-    static String TAG = "XXX"; // XXX
+    private static String TAG = "MainActivity";
 
-    static final String APP_ID = "6494";
+    private static final String APP_ID = "6494";
 
-    static final PlacementItem[] data = {
-            new PlacementItem("4654", PlacementItem.Type.INTERSTITIAL),
-            new PlacementItem("3231", PlacementItem.Type.INTERSTITIAL),
-            new PlacementItem("4655", PlacementItem.Type.BANNER),
+    private static final PlacementListItem[] data = {
+            new PlacementListItem("4654", PlacementListItem.Type.INTERSTITIAL),
+            new PlacementListItem("3231", PlacementListItem.Type.INTERSTITIAL),
+            new PlacementListItem("4655", PlacementListItem.Type.BANNER),
     };
 
     @Override
@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onInitError(String msg) {
-                // TODO: Show toast
                 Log.e(TAG, msg);
             }
         });
@@ -49,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         recyclerView.setLayoutManager(layoutManager);
 
-        PlacementAdapter adapter = new PlacementAdapter(data);
+        PlacementListAdapter adapter = new PlacementListAdapter(data);
         recyclerView.setAdapter(adapter);
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this, recyclerView, new RecyclerTouchListener.ClickListener() {

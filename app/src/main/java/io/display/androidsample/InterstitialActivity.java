@@ -18,13 +18,13 @@ import io.display.sdk.listeners.AdRequestListener;
 
 public class InterstitialActivity extends AppCompatActivity {
 
-    static String TAG = "XXX"; // XXX
+    private static String TAG = "InterstitialActivity";
 
-    Button loadButton;
-    Button showButton;
+    private Button loadButton;
+    private Button showButton;
 
-    String placementId;
-    Ad loadedAd;
+    private String placementId;
+    private Ad loadedAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

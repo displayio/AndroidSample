@@ -1,6 +1,6 @@
 package io.display.androidsample;
 
-public class PlacementItem {
+public class PlacementListItem {
 
     enum Type {
         INTERSTITIAL,
@@ -10,7 +10,7 @@ public class PlacementItem {
     String id;
     Type type;
 
-    public PlacementItem(String id, Type type) {
+    public PlacementListItem(String id, Type type) {
         this.id = id;
         this.type = type;
     }

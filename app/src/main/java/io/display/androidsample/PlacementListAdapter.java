@@ -6,11 +6,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-public class PlacementAdapter extends RecyclerView.Adapter<PlacementAdapter.MyViewHolder> {
+public class PlacementListAdapter extends RecyclerView.Adapter<PlacementListAdapter.MyViewHolder> {
 
-    private PlacementItem[] data;
+    private PlacementListItem[] data;
 
-    public PlacementAdapter(PlacementItem[] data) {
+    public PlacementListAdapter(PlacementListItem[] data) {
         this.data = data;
     }
 
@@ -28,7 +28,7 @@ public class PlacementAdapter extends RecyclerView.Adapter<PlacementAdapter.MyVi
     }
 
     @Override
-    public PlacementAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public PlacementListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_main, parent, false);
         return new MyViewHolder(v);
     }
@@ -44,7 +44,7 @@ public class PlacementAdapter extends RecyclerView.Adapter<PlacementAdapter.MyVi
         return data.length;
     }
 
-    private String getTypeAsString(PlacementItem.Type type) {
+    private String getTypeAsString(PlacementListItem.Type type) {
         switch (type) {
             case BANNER:
                 return "Banner";
