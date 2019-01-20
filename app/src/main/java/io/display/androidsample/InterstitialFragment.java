@@ -20,6 +20,20 @@ public class InterstitialFragment extends Fragment {
     Button loadButton;
     Button showButton;
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(true);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setHomeAsUpIndicator(0);
+        actionBar.setTitle("Interstitial");
+
+        setHasOptionsMenu(true);
+    }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -45,20 +59,6 @@ public class InterstitialFragment extends Fragment {
         });
 
         return contentView;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        actionBar.setDisplayShowHomeEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setHomeAsUpIndicator(0);
-        actionBar.setTitle("Interstitial");
-
-        setHasOptionsMenu(true);
     }
 
     @Override

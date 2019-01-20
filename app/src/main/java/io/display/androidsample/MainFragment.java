@@ -8,30 +8,67 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import io.display.androidsample.utils.FragmentHelper;
 import io.display.androidsample.utils.RecyclerTouchListener;
+import io.display.sdk.Controller;
+import io.display.sdk.listeners.SdkInitListener;
 
 public class MainFragment extends Fragment {
+
+    static String TAG = "XXX"; // XXX
+
+    static final String APP_ID = "6494";
+
+    static final PlacementItem[] data = {
+            new PlacementItem("4654", PlacementItem.Type.INTERSTITIAL),
+            new PlacementItem("3231", PlacementItem.Type.INTERSTITIAL),
+            new PlacementItem("4655", PlacementItem.Type.BANNER),
+    };
+
+    View contentView;
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setHomeButtonEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(true);
+
+        Controller.getInstance().init(getContext(), APP_ID, new SdkInitListener() {
+            @Override
+            public void onInit() {
+                Log.i(TAG, "Controller initialized");
+                postInit();
+            }
+
+            @Override
+            public void onInitError(String msg) {
+                // TODO: Show toast
+                Log.e(TAG, msg);
+            }
+        });
+    }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        View contentView = inflater.inflate(R.layout.fragment_main, container, false);
+        contentView = inflater.inflate(R.layout.fragment_main, container, false);
+        return contentView;
+    }
 
-        RecyclerView recyclerView = (RecyclerView) contentView.findViewById(R.id.recycler_view);
+    private void postInit()
+    {
+        RecyclerView recyclerView = contentView.findViewById(R.id.recycler_view);
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-
-        final PlacementItem[] data = {
-                new PlacementItem("4654", PlacementItem.Type.INTERSTITIAL),
-                new PlacementItem("3231", PlacementItem.Type.INTERSTITIAL),
-                new PlacementItem("4655", PlacementItem.Type.BANNER),
-        };
 
         PlacementAdapter adapter = new PlacementAdapter(data);
         recyclerView.setAdapter(adapter);
@@ -62,17 +99,5 @@ public class MainFragment extends Fragment {
             @Override
             public void onLongClick(View view, int position) {}
         }));
-
-        return contentView;
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        ActionBar actionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setHomeButtonEnabled(false);
-        actionBar.setDisplayShowTitleEnabled(true);
     }
 }
