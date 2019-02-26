@@ -19,8 +19,8 @@ public class MainActivity extends AppCompatActivity {
     private static final String APP_ID = "6494";
 
     private static final PlacementListItem[] data = {
-            new PlacementListItem("4654", PlacementListItem.Type.INTERSTITIAL),
-            new PlacementListItem("3231", PlacementListItem.Type.INTERSTITIAL),
+            new PlacementListItem("4654", PlacementListItem.Type.INTERSTITIAL), // Html
+            new PlacementListItem("3231", PlacementListItem.Type.INTERSTITIAL), // Video
             new PlacementListItem("4655", PlacementListItem.Type.BANNER),
     };
 
