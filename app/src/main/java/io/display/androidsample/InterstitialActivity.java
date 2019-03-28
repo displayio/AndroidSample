@@ -13,6 +13,7 @@ import io.display.sdk.Controller;
 import io.display.sdk.Placement;
 import io.display.sdk.ads.Ad;
 import io.display.sdk.exceptions.DioSdkException;
+import io.display.sdk.listeners.AdEventListener;
 import io.display.sdk.listeners.AdLoadListener;
 import io.display.sdk.listeners.AdRequestListener;
 
@@ -97,6 +98,34 @@ public class InterstitialActivity extends AppCompatActivity {
 
     private void showAd() {
         showButton.setEnabled(false);
+
+        loadedAd.setEventListener(new AdEventListener() {
+            @Override
+            public void onShown(Ad ad) {
+                Log.e(TAG, "onShown");
+            }
+
+            @Override
+            public void onFailedToShow(Ad ad) {
+                Log.e(TAG, "onFailedToShow");
+            }
+
+            @Override
+            public void onClicked(Ad ad) {
+                Log.e(TAG, "onClicked");
+            }
+
+            @Override
+            public void onClosed(Ad ad) {
+                Log.e(TAG, "onClosed");
+            }
+
+            @Override
+            public void onAdCompleted(Ad ad) {
+                Log.e(TAG, "onAdCompleted");
+            }
+        });
+
         loadedAd.showAd(this);
     }
 }
