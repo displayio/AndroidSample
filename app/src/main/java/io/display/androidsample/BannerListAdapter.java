@@ -64,7 +64,9 @@ public class BannerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder.getItemViewType() == TYPE_AD && holder instanceof AdViewHolder) {
             try {
-                BannerAdContainer bannerContainer = ((BannerPlacement) Controller.getInstance().getPlacement(placementId)).getBannerContainer(context, requestId);
+                BannerPlacement bannerPlacement = (BannerPlacement) Controller.getInstance().getPlacement(placementId);
+                bannerPlacement.setFullWidth(true);
+                BannerAdContainer bannerContainer = bannerPlacement.getBannerContainer(context, requestId);
                 bannerContainer.bindTo((RelativeLayout) holder.itemView);
             } catch (DioSdkException e) {
                 Log.e(TAG, e.getLocalizedMessage());
