@@ -1,5 +1,6 @@
 package io.display.androidsample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -29,11 +30,13 @@ public class BannerActivity extends AppCompatActivity {
 
     private String placementId;
     private String requestId;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_banner);
+
 
         placementId = getIntent().getStringExtra("placementId");
 
@@ -49,10 +52,17 @@ public class BannerActivity extends AppCompatActivity {
         showButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAd();
+                Intent intent = new Intent(BannerActivity.this, ShowListWithBannerActivity.class);
+                intent.putExtra("placementId", placementId);
+                intent.putExtra("requestId", requestId);
+                startActivity(intent);
+                //showAd();
             }
         });
     }
+
+
+
 
     private void loadAd() {
         loadButton.setEnabled(false);
@@ -105,7 +115,8 @@ public class BannerActivity extends AppCompatActivity {
     }
 
     private void setupRecyclerView() {
-        RecyclerView recyclerView = findViewById(R.id.recycler_view_banner);
+
+        recyclerView = findViewById(R.id.recycler_view_banner);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         ArrayList<String> items = new ArrayList<>();
