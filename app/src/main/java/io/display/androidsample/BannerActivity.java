@@ -62,7 +62,11 @@ public class BannerActivity extends AppCompatActivity {
     }
 
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadButton.setEnabled(true);
+    }
 
     private void loadAd() {
         loadButton.setEnabled(false);
