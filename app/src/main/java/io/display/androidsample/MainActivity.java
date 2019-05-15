@@ -29,18 +29,23 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Controller.getInstance().init(this, APP_ID, new SdkInitListener() {
-            @Override
-            public void onInit() {
-                Log.i(TAG, "Controller initialized");
-                postInit();
-            }
+        Controller ctrl = Controller.getInstance();
+        if (!ctrl.isInitialized()) {
+            ctrl.getInstance().init(this, APP_ID, new SdkInitListener() {
+                @Override
+                public void onInit() {
+                    Log.i(TAG, "Controller initialized");
+                    postInit();
+                }
 
-            @Override
-            public void onInitError(String msg) {
-                Log.e(TAG, msg);
-            }
-        });
+                @Override
+                public void onInitError(String msg) {
+                    Log.e(TAG, msg);
+                }
+            });
+        } else {
+            postInit();
+        }
     }
 
     private void postInit() {
