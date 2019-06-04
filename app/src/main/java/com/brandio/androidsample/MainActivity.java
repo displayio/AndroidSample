@@ -1,4 +1,4 @@
-package io.display.androidsample;
+package com.brandio.androidsample;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -8,7 +8,9 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
-import io.display.androidsample.utils.RecyclerTouchListener;
+import com.brandio.androidsample.utils.RecyclerTouchListener;
+
+
 import io.display.sdk.Controller;
 import io.display.sdk.listeners.SdkInitListener;
 

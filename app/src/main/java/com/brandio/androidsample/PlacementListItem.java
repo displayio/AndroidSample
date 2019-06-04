@@ -1,4 +1,4 @@
-package io.display.androidsample;
+package com.brandio.androidsample;
 
 public class PlacementListItem {
 

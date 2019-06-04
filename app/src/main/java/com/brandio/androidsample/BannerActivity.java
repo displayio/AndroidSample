@@ -1,11 +1,16 @@
-package io.display.androidsample;
+package com.brandio.androidsample;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import java.util.ArrayList;
 
 import io.display.sdk.AdProvider;
 import io.display.sdk.AdRequest;
@@ -13,28 +18,29 @@ import io.display.sdk.Controller;
 import io.display.sdk.Placement;
 import io.display.sdk.ads.Ad;
 import io.display.sdk.exceptions.DioSdkException;
-import io.display.sdk.listeners.AdEventListener;
 import io.display.sdk.listeners.AdLoadListener;
 import io.display.sdk.listeners.AdRequestListener;
 
-public class InterstitialActivity extends AppCompatActivity {
+public class BannerActivity extends AppCompatActivity {
 
-    private static String TAG = "InterstitialActivity";
+    private static String TAG = "BannerActivity";
 
     private Button loadButton;
     private Button showButton;
 
     private String placementId;
-    private Ad loadedAd;
+    private String requestId;
+    RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_interstitial);
+        setContentView(R.layout.activity_banner);
+
 
         placementId = getIntent().getStringExtra("placementId");
 
-        loadButton = findViewById(R.id.button_load_interstitial);
+        loadButton = findViewById(R.id.button_load_banner);
         loadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -42,13 +48,24 @@ public class InterstitialActivity extends AppCompatActivity {
             }
         });
 
-        showButton = findViewById(R.id.button_show_interstitial);
+        showButton = findViewById(R.id.button_show_banner);
         showButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showAd();
+                Intent intent = new Intent(BannerActivity.this, ShowListWithBannerActivity.class);
+                intent.putExtra("placementId", placementId);
+                intent.putExtra("requestId", requestId);
+                startActivity(intent);
+                //showAd();
             }
         });
+    }
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadButton.setEnabled(true);
     }
 
     private void loadAd() {
@@ -57,13 +74,12 @@ public class InterstitialActivity extends AppCompatActivity {
         Placement placement;
         try {
             placement = Controller.getInstance().getPlacement(placementId);
-            placement.getData();
         } catch (DioSdkException e) {
             Log.e(TAG, e.getLocalizedMessage());
             return;
         }
 
-        AdRequest adRequest = placement.newAdRequest();
+        final AdRequest adRequest = placement.newAdRequest();
         adRequest.setAdRequestListener(new AdRequestListener() {
             @Override
             public void onAdReceived(AdProvider adProvider) {
@@ -71,13 +87,13 @@ public class InterstitialActivity extends AppCompatActivity {
                 adProvider.setAdLoadListener(new AdLoadListener() {
                     @Override
                     public void onLoaded(Ad ad) {
-                        loadedAd = ad;
+                        requestId = adRequest.getId();
                         showButton.setEnabled(true);
                     }
 
                     @Override
                     public void onFailedToLoad() {
-                        Toast.makeText(InterstitialActivity.this, "Ad for placement " + placementId + " failed to load", Toast.LENGTH_LONG).show();
+                        Toast.makeText(BannerActivity.this, "Ad for placement " + placementId + " failed to load", Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -90,7 +106,7 @@ public class InterstitialActivity extends AppCompatActivity {
 
             @Override
             public void onNoAds() {
-                Toast.makeText(InterstitialActivity.this, "No Ads placement " + placementId, Toast.LENGTH_LONG).show();
+                Toast.makeText(BannerActivity.this, "No Ads placement " + placementId, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -99,34 +115,19 @@ public class InterstitialActivity extends AppCompatActivity {
 
     private void showAd() {
         showButton.setEnabled(false);
+        setupRecyclerView();
+    }
 
-        loadedAd.setEventListener(new AdEventListener() {
-            @Override
-            public void onShown(Ad ad) {
-                Log.e(TAG, "onShown");
-            }
+    private void setupRecyclerView() {
 
-            @Override
-            public void onFailedToShow(Ad ad) {
-                Log.e(TAG, "onFailedToShow");
-            }
+        recyclerView = findViewById(R.id.recycler_view_banner);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-            @Override
-            public void onClicked(Ad ad) {
-                Log.e(TAG, "onClicked");
-            }
+        ArrayList<String> items = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) {
+            items.add("Content item " + i);
+        }
 
-            @Override
-            public void onClosed(Ad ad) {
-                Log.e(TAG, "onClosed");
-            }
-
-            @Override
-            public void onAdCompleted(Ad ad) {
-                Log.e(TAG, "onAdCompleted");
-            }
-        });
-
-        loadedAd.showAd(this);
+        recyclerView.setAdapter(new BannerListAdapter(items, 2, placementId, requestId));
     }
 }
