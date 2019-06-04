@@ -57,6 +57,7 @@ public class InterstitialActivity extends AppCompatActivity {
         Placement placement;
         try {
             placement = Controller.getInstance().getPlacement(placementId);
+            placement.getData();
         } catch (DioSdkException e) {
             Log.e(TAG, e.getLocalizedMessage());
             return;
