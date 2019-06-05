@@ -10,11 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.brandio.androidsample.ShowListWithBannerActivity"></activity>
-        <activity android:name="com.brandio.androidsample.MainActivity">
-=======
+        <activity android:name=".ShowListWithBannerActivity"></activity>
+        <activity android:name=".MainActivity">
 
->>>>>>> e0bfea7e1b7592f10b5a78e7b11d384d923fd0fb
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -22,11 +20,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name="com.brandio.androidsample.BannerActivity" />
-        <activity android:name="com.brandio.androidsample.InterstitialActivity" />
-=======
+        <activity android:name=".BannerActivity" />
+        <activity android:name=".InterstitialActivity" />
 
->>>>>>> e0bfea7e1b7592f10b5a78e7b11d384d923fd0fb
     </application>
 
 </manifest>
