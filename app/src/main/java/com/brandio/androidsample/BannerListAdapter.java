@@ -10,14 +10,15 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.brandio.ads.BannerPlacement;
+import com.brandio.ads.Controller;
+import com.brandio.ads.ads.BannerAdContainer;
+import com.brandio.ads.exceptions.DioSdkException;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
-import io.display.sdk.BannerPlacement;
-import io.display.sdk.Controller;
-import io.display.sdk.ads.BannerAdContainer;
-import io.display.sdk.exceptions.DioSdkException;
 
 public class BannerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 

@@ -8,11 +8,10 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 
+import com.brandio.ads.Controller;
+import com.brandio.ads.listeners.SdkInitListener;
 import com.brandio.androidsample.utils.RecyclerTouchListener;
 
-
-import io.display.sdk.Controller;
-import io.display.sdk.listeners.SdkInitListener;
 
 public class MainActivity extends AppCompatActivity {
 
