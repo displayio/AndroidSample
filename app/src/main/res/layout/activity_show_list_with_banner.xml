@@ -5,11 +5,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-<<<<<<< HEAD
+
     tools:context="com.brandio.androidsample.BannerActivity"
-=======
-    tools:context=".BannerActivity"
->>>>>>> e0bfea7e1b7592f10b5a78e7b11d384d923fd0fb
+
     android:orientation="vertical">
 
 
