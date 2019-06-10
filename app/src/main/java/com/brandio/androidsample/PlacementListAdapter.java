@@ -37,7 +37,7 @@ public class PlacementListAdapter extends RecyclerView.Adapter<PlacementListAdap
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.textId.setText(data[position].id);
-        holder.textType.setText(getTypeAsString(data[position].type));
+        holder.textType.setText(getTypeAsString(position));
     }
 
     @Override
@@ -45,14 +45,22 @@ public class PlacementListAdapter extends RecyclerView.Adapter<PlacementListAdap
         return data.length;
     }
 
-    private String getTypeAsString(PlacementListItem.Type type) {
-        switch (type) {
-            case BANNER:
-                return "Banner";
+    private String getTypeAsString(int position) {
+        switch (position) {
+            case 0:
+                return "Interstitial Display";
 
-            default:
-            case INTERSTITIAL:
-                return "Interstitial";
+            case 1:
+                return "Interstitial Video";
+
+            case 2:
+                return "Banner Video";
+
+            case 3:
+                return "Banner Display";
+
+             default:
+                 return "";
         }
     }
 }
