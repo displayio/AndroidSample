@@ -27,7 +27,7 @@ public class ShowListWithBannerActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         ArrayList<String> items = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 1; i <= 20; i++) {
             items.add("Content item " + i);
         }
 
