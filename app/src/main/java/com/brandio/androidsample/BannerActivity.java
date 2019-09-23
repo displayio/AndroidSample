@@ -111,6 +111,7 @@ public class BannerActivity extends AppCompatActivity {
             }
         });
 
+        adRequest.setDetailsRequired(true);
         adRequest.requestAd();
     }
 
