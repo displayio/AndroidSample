@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.brandio.androidsample.BannerActivity"
+    tools:context="com.brandio.androidsample.InfeedActivity"
     android:orientation="vertical">
 
     <LinearLayout
@@ -14,14 +14,14 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/button_load_banner"
+            android:id="@+id/button_load_infeed"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="LOAD"/>
 
         <Button
-            android:id="@+id/button_show_banner"
+            android:id="@+id/button_show_infeed"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -31,7 +31,7 @@
     </LinearLayout>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_banner_1"
+        android:id="@+id/recycler_view_infeed_1"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </android.support.v7.widget.RecyclerView>

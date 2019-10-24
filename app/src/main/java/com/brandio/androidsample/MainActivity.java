@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity {
     private static final PlacementListItem[] data = {
             new PlacementListItem("4654", PlacementListItem.Type.INTERSTITIAL), // Html
             new PlacementListItem("3231", PlacementListItem.Type.INTERSTITIAL), // Video
-            new PlacementListItem("4655", PlacementListItem.Type.BANNER),       // Video Banner
-            new PlacementListItem("5369", PlacementListItem.Type.BANNER),       // Html Banner
+            new PlacementListItem("4655", PlacementListItem.Type.INFEED),       // Video Infeed
+            new PlacementListItem("5369", PlacementListItem.Type.INFEED),       // Html Infeed
     };
 
     @Override
@@ -65,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
                 args.putString("placementId", data[position].id);
 
                 switch (data[position].type) {
-                    case BANNER: {
-                        Intent intent = new Intent(MainActivity.this, BannerActivity.class);
+                    case INFEED: {
+                        Intent intent = new Intent(MainActivity.this, InfeedActivity.class);
                         intent.putExtra("placementId", data[position].id);
                         startActivity(intent);
                         break;

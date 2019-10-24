@@ -22,9 +22,9 @@ import com.brandio.ads.listeners.AdRequestListener;
 import java.util.ArrayList;
 
 
-public class BannerActivity extends AppCompatActivity {
+public class InfeedActivity extends AppCompatActivity {
 
-    private static String TAG = "BannerActivity";
+    private static String TAG = "InfeedActivity";
 
     private Button loadButton;
     private Button showButton;
@@ -36,12 +36,12 @@ public class BannerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_banner);
+        setContentView(R.layout.activity_infeed);
 
 
         placementId = getIntent().getStringExtra("placementId");
 
-        loadButton = findViewById(R.id.button_load_banner);
+        loadButton = findViewById(R.id.button_load_infeed);
         loadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,11 +49,11 @@ public class BannerActivity extends AppCompatActivity {
             }
         });
 
-        showButton = findViewById(R.id.button_show_banner);
+        showButton = findViewById(R.id.button_show_infeed);
         showButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(BannerActivity.this, ShowListWithBannerActivity.class);
+                Intent intent = new Intent(InfeedActivity.this, ShowListWithInfeedActivity.class);
                 intent.putExtra("placementId", placementId);
                 intent.putExtra("requestId", requestId);
                 startActivity(intent);
@@ -94,7 +94,7 @@ public class BannerActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailedToLoad() {
-                        Toast.makeText(BannerActivity.this, "Ad for placement " + placementId + " failed to load", Toast.LENGTH_LONG).show();
+                        Toast.makeText(InfeedActivity.this, "Ad for placement " + placementId + " failed to load", Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -107,7 +107,7 @@ public class BannerActivity extends AppCompatActivity {
 
             @Override
             public void onNoAds() {
-                Toast.makeText(BannerActivity.this, "No Ads placement " + placementId, Toast.LENGTH_LONG).show();
+                Toast.makeText(InfeedActivity.this, "No Ads placement " + placementId, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -122,7 +122,7 @@ public class BannerActivity extends AppCompatActivity {
 
     private void setupRecyclerView() {
 
-        recyclerView = findViewById(R.id.recycler_view_banner);
+        recyclerView = findViewById(R.id.recycler_view_infeeds);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         ArrayList<String> items = new ArrayList<>();
@@ -130,6 +130,6 @@ public class BannerActivity extends AppCompatActivity {
             items.add("Content item " + i);
         }
 
-        recyclerView.setAdapter(new BannerListAdapter(items, 2, placementId, requestId));
+        recyclerView.setAdapter(new InfeedListAdapter(items, 2, placementId, requestId));
     }
 }

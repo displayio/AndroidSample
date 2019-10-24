@@ -10,7 +10,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".ShowListWithBannerActivity"></activity>
+        <activity android:name=".ShowListWithInfeedActivity"></activity>
         <activity android:name=".MainActivity">
 
             <intent-filter>
@@ -20,7 +20,7 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".BannerActivity" />
+        <activity android:name=".InfeedActivity" />
         <activity android:name=".InterstitialActivity" />
 
     </application>

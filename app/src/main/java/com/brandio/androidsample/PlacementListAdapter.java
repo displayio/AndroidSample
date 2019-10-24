@@ -54,10 +54,10 @@ public class PlacementListAdapter extends RecyclerView.Adapter<PlacementListAdap
                 return "Interstitial Video";
 
             case 2:
-                return "Banner Video";
+                return "Infeed Video";
 
             case 3:
-                return "Banner Display";
+                return "Infeed Display";
 
              default:
                  return "";

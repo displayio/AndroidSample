@@ -10,9 +10,9 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.brandio.ads.BannerPlacement;
 import com.brandio.ads.Controller;
-import com.brandio.ads.ads.BannerAdContainer;
+import com.brandio.ads.InfeedPlacement;
+import com.brandio.ads.ads.InfeedAdContainer;
 import com.brandio.ads.exceptions.DioSdkException;
 
 import java.util.ArrayList;
@@ -20,9 +20,9 @@ import java.util.List;
 
 
 
-public class BannerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class InfeedListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final String TAG = "BannerListAdapter";
+    private static final String TAG = "InfeedListAdapter";
 
     private static final int TYPE_AD = 0;
     private static final int TYPE_CONTENT = 1;
@@ -32,7 +32,7 @@ public class BannerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     private List<String> items;
     private Context context;
 
-    public BannerListAdapter(List<String> items, int adPosition, String placementId, String requestId) {
+    public InfeedListAdapter(List<String> items, int adPosition, String placementId, String requestId) {
         this.placementId = placementId;
         this.requestId = requestId;
 
@@ -47,9 +47,9 @@ public class BannerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         context = parent.getContext().getApplicationContext();
         switch (viewType) {
             case TYPE_AD:
-                return new AdViewHolder(BannerAdContainer.getAdView(context));
+                return new AdViewHolder(InfeedAdContainer.getAdView(context));
             default:
-                return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_banner, parent, false));
+                return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_infeed, parent, false));
         }
     }
 
@@ -66,11 +66,11 @@ public class BannerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder.getItemViewType() == TYPE_AD && holder instanceof AdViewHolder) {
             try {
-                BannerPlacement bannerPlacement = (BannerPlacement) Controller.getInstance().getPlacement(placementId);
-                bannerPlacement.setFullWidth(true);
-                bannerPlacement.setFrameless(true);
-                BannerAdContainer bannerContainer = bannerPlacement.getBannerContainer(context, requestId);
-                bannerContainer.bindTo((RelativeLayout) holder.itemView);
+                InfeedPlacement infeedPlacement = (InfeedPlacement) Controller.getInstance().getPlacement(placementId);
+                infeedPlacement.setFullWidth(true);
+                infeedPlacement.setFrameless(true);
+                InfeedAdContainer infeedContainer = infeedPlacement.getInfeedContainer(context, requestId);
+                infeedContainer.bindTo((RelativeLayout) holder.itemView);
             } catch (DioSdkException e) {
                 Log.e(TAG, e.getLocalizedMessage());
             }

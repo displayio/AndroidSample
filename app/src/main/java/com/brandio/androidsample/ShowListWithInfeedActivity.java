@@ -1,6 +1,5 @@
 package com.brandio.androidsample;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -8,7 +7,7 @@ import android.support.v7.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class ShowListWithBannerActivity extends AppCompatActivity {
+public class ShowListWithInfeedActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
 
@@ -18,12 +17,12 @@ public class ShowListWithBannerActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_show_list_with_banner);
+        setContentView(R.layout.activity_show_list_with_infeeds);
 
         placementId = getIntent().getStringExtra("placementId");
         requestId = getIntent().getStringExtra("requestId");
 
-        recyclerView = findViewById(R.id.recycler_view_banner);
+        recyclerView = findViewById(R.id.recycler_view_infeeds);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
         ArrayList<String> items = new ArrayList<>();
@@ -31,6 +30,6 @@ public class ShowListWithBannerActivity extends AppCompatActivity {
             items.add("Content item " + i);
         }
 
-        recyclerView.setAdapter(new BannerListAdapter(items, 2, placementId, requestId));
+        recyclerView.setAdapter(new InfeedListAdapter(items, 2, placementId, requestId));
     }
 }

@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    tools:context="com.brandio.androidsample.BannerActivity"
+    tools:context="com.brandio.androidsample.InfeedActivity"
 
     android:orientation="vertical">
 
 
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_banner"
+        android:id="@+id/recycler_view_infeeds"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </android.support.v7.widget.RecyclerView>

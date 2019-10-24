@@ -4,7 +4,7 @@ public class PlacementListItem {
 
     enum Type {
         INTERSTITIAL,
-        BANNER
+        INFEED
     }
 
     String id;
