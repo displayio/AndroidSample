@@ -6,4 +6,16 @@
 
     <color name="menu_pressed">#e0e0e0</color>
     <color name="menu">#ffffff</color>
+
+    <color name="boxColor">#DEDFE0</color>
+    <color name="lineColor">#DEDFE0</color>
+    <color name="boldLineColor">#D5D5D5</color>
+    <color name="headerAndFooter">#202020</color>
+
+
+    <color name="empty_fragment_color">#512DA8</color>
+    <color name="shadow_color">#111011</color>
+
+    <color name="recyclerViewBackground">#49546B</color>
+    <color name="recyclerViewItemBackground">#19C5C3C3</color>
 </resources>

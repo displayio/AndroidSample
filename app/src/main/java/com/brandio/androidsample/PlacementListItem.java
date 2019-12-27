@@ -4,7 +4,11 @@ public class PlacementListItem {
 
     enum Type {
         INTERSTITIAL,
-        INFEED
+        INFEED,
+        BANNER,
+        MEDIUM_RECTABGLE,
+        FEED_INTERSTITIAL,
+        REWARDED_VIDEO
     }
 
     String id;

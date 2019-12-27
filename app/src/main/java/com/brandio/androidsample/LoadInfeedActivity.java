@@ -3,8 +3,6 @@ package com.brandio.androidsample;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -19,27 +17,25 @@ import com.brandio.ads.exceptions.DioSdkException;
 import com.brandio.ads.listeners.AdLoadListener;
 import com.brandio.ads.listeners.AdRequestListener;
 
-import java.util.ArrayList;
 
+public class LoadInfeedActivity extends AppCompatActivity {
 
-public class InfeedActivity extends AppCompatActivity {
-
-    private static String TAG = "InfeedActivity";
+    private static String TAG = "LoadInfeedActivity";
 
     private Button loadButton;
     private Button showButton;
 
     private String placementId;
     private String requestId;
-    RecyclerView recyclerView;
+    private String adUnitType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_infeed);
 
-
-        placementId = getIntent().getStringExtra("placementId");
+        placementId = getIntent().getStringExtra(MainActivity.PLACEMENT_ID);
+        adUnitType = getIntent().getStringExtra(MainActivity.AD_UNIT_TYPE);
 
         loadButton = findViewById(R.id.button_load_infeed);
         loadButton.setOnClickListener(new View.OnClickListener() {
@@ -53,15 +49,14 @@ public class InfeedActivity extends AppCompatActivity {
         showButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(InfeedActivity.this, ShowListWithInfeedActivity.class);
-                intent.putExtra("placementId", placementId);
-                intent.putExtra("requestId", requestId);
+                Intent intent = new Intent(LoadInfeedActivity.this, ShowListWithInfeedActivity.class);
+                intent.putExtra(MainActivity.PLACEMENT_ID, placementId);
+                intent.putExtra(MainActivity.REQUEST_ID, requestId);
+                intent.putExtra(MainActivity.AD_UNIT_TYPE, adUnitType);
                 startActivity(intent);
-                //showAd();
             }
         });
     }
-
 
     @Override
     protected void onResume() {
@@ -94,7 +89,7 @@ public class InfeedActivity extends AppCompatActivity {
 
                     @Override
                     public void onFailedToLoad() {
-                        Toast.makeText(InfeedActivity.this, "Ad for placement " + placementId + " failed to load", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoadInfeedActivity.this, "Ad for placement " + placementId + " failed to load", Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -107,7 +102,7 @@ public class InfeedActivity extends AppCompatActivity {
 
             @Override
             public void onNoAds() {
-                Toast.makeText(InfeedActivity.this, "No Ads placement " + placementId, Toast.LENGTH_LONG).show();
+                Toast.makeText(LoadInfeedActivity.this, "No Ads placement " + placementId, Toast.LENGTH_LONG).show();
             }
         });
 
@@ -115,21 +110,4 @@ public class InfeedActivity extends AppCompatActivity {
         adRequest.requestAd();
     }
 
-    private void showAd() {
-        showButton.setEnabled(false);
-        setupRecyclerView();
-    }
-
-    private void setupRecyclerView() {
-
-        recyclerView = findViewById(R.id.recycler_view_infeeds);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
-        ArrayList<String> items = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) {
-            items.add("Content item " + i);
-        }
-
-        recyclerView.setAdapter(new InfeedListAdapter(items, 2, placementId, requestId));
-    }
 }

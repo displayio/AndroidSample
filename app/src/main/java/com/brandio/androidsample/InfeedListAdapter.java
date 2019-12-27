@@ -8,11 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.brandio.ads.Controller;
 import com.brandio.ads.InfeedPlacement;
-import com.brandio.ads.ads.InfeedAdContainer;
+import com.brandio.ads.containers.InfeedAdContainer;
 import com.brandio.ads.exceptions.DioSdkException;
 
 import java.util.ArrayList;
@@ -23,16 +22,15 @@ import java.util.List;
 public class InfeedListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     private static final String TAG = "InfeedListAdapter";
-
     private static final int TYPE_AD = 0;
     private static final int TYPE_CONTENT = 1;
 
     private String placementId;
     private String requestId;
-    private List<String> items;
+    private List<Integer> items;
     private Context context;
 
-    public InfeedListAdapter(List<String> items, int adPosition, String placementId, String requestId) {
+    public InfeedListAdapter(List<Integer> items, int adPosition, String placementId, String requestId) {
         this.placementId = placementId;
         this.requestId = requestId;
 
@@ -49,7 +47,8 @@ public class InfeedListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             case TYPE_AD:
                 return new AdViewHolder(InfeedAdContainer.getAdView(context));
             default:
-                return new ItemViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_infeed, parent, false));
+                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.infeed_list_item, parent, false);
+                return  new ItemViewHolder(view);
         }
     }
 
@@ -74,8 +73,6 @@ public class InfeedListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             } catch (DioSdkException e) {
                 Log.e(TAG, e.getLocalizedMessage());
             }
-        } else {
-            ((ItemViewHolder) holder).textLine.setText(items.get(holder.getAdapterPosition()));
         }
     }
 
@@ -86,11 +83,8 @@ public class InfeedListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
 
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textLine;
-
         ItemViewHolder(View itemView) {
             super(itemView);
-            textLine = itemView.findViewById(R.id.text_line);
         }
     }
 
