@@ -11,8 +11,11 @@ import android.widget.Toast;
 import com.brandio.ads.AdProvider;
 import com.brandio.ads.AdRequest;
 import com.brandio.ads.Controller;
+import com.brandio.ads.FeedInterstitialPlacement;
 import com.brandio.ads.Placement;
 import com.brandio.ads.ads.Ad;
+import com.brandio.ads.ads.supers.FeedInterstittialAdInterface;
+import com.brandio.ads.containers.FeedInterstitialContainer;
 import com.brandio.ads.exceptions.DioSdkException;
 import com.brandio.ads.listeners.AdLoadListener;
 import com.brandio.ads.listeners.AdRequestListener;
@@ -20,6 +23,7 @@ import com.brandio.ads.listeners.AdRequestListener;
 
 public class LoadInfeedActivity extends AppCompatActivity {
 
+    public final static int AD_POSITION = 12;
     private static String TAG = "LoadInfeedActivity";
 
     private Button loadButton;
@@ -46,6 +50,8 @@ public class LoadInfeedActivity extends AppCompatActivity {
         });
 
         showButton = findViewById(R.id.button_show_infeed);
+        showButton.setEnabled(true);
+
         showButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -85,6 +91,15 @@ public class LoadInfeedActivity extends AppCompatActivity {
                     public void onLoaded(Ad ad) {
                         requestId = adRequest.getId();
                         showButton.setEnabled(true);
+                        if (ad instanceof FeedInterstittialAdInterface){
+                            try {
+                                FeedInterstitialPlacement placement = (FeedInterstitialPlacement) Controller.getInstance().getPlacement(placementId);
+                                FeedInterstitialContainer container = placement.getContainer(getApplicationContext(), requestId, AD_POSITION);
+                                Controller.getInstance().setStoredContainer(container);
+                            } catch (DioSdkException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
 
                     @Override

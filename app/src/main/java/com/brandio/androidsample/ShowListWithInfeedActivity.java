@@ -6,8 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.brandio.ads.Controller;
+
 import java.util.ArrayList;
 
+import static com.brandio.androidsample.LoadInfeedActivity.AD_POSITION;
 import static com.brandio.androidsample.MainActivity.*;
 
 public class ShowListWithInfeedActivity extends AppCompatActivity {
@@ -38,17 +41,21 @@ public class ShowListWithInfeedActivity extends AppCompatActivity {
 
         switch (adUnitType){
             case "INFEED" :{
-                recyclerView.setAdapter(new InfeedListAdapter(items, 12, placementId, requestId));
+                recyclerView.setAdapter(new InfeedListAdapter(items, AD_POSITION, placementId, requestId));
                 break;
             }
             case "FEED_INTERSTITIAL" :{
-                recyclerView.setAdapter(new FeedInterstitialListAdapter(items, 12, placementId, requestId));
+                recyclerView.setAdapter(new FeedInterstitialListAdapter(items, AD_POSITION, placementId, requestId));
 
                 break;
             }
         }
 
+    }
 
-
+    @Override
+    protected void onDestroy() {
+        Controller.getInstance().setStoredContainer(null);
+        super.onDestroy();
     }
 }

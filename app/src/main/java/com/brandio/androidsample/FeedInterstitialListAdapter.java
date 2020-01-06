@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import com.brandio.ads.Controller;
 import com.brandio.ads.FeedInterstitialPlacement;
@@ -65,12 +66,17 @@ public class FeedInterstitialListAdapter extends RecyclerView.Adapter<RecyclerVi
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
         if (holder.getItemViewType() == AD_VIEW_TYPE && holder instanceof AdHolder) {
             try {
-                FeedInterstitialPlacement placement = (FeedInterstitialPlacement)Controller.getInstance().getPlacement(placementId);
-                FeedInterstitialContainer container = placement.getContainer(context, requestId, position);
-                container.bindTo((ViewGroup) holder.itemView, ((AdHolder)holder).parent);
+                FeedInterstitialContainer container = Controller.getInstance().getStoredContainer();
+                if (container != null) {
+                    container.bindTo((ViewGroup)holder.itemView, ((AdHolder)holder).parent);
+                } else {
+                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
+                            ViewGroup.LayoutParams.WRAP_CONTENT, 0);
+                    holder.itemView.setLayoutParams(params);
+                }
 
-            } catch (DioSdkException e) {
-                Log.e(getClass().getSimpleName(), e.getLocalizedMessage());
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         }
     }
