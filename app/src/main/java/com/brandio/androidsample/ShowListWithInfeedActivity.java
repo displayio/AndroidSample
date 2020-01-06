@@ -1,6 +1,5 @@
 package com.brandio.androidsample;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -11,7 +10,9 @@ import com.brandio.ads.Controller;
 import java.util.ArrayList;
 
 import static com.brandio.androidsample.LoadInfeedActivity.AD_POSITION;
-import static com.brandio.androidsample.MainActivity.*;
+import static com.brandio.androidsample.MainActivity.AD_UNIT_TYPE;
+import static com.brandio.androidsample.MainActivity.PLACEMENT_ID;
+import static com.brandio.androidsample.MainActivity.REQUEST_ID;
 
 public class ShowListWithInfeedActivity extends AppCompatActivity {
 
