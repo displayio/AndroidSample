@@ -42,10 +42,6 @@ public class FeedInterstitialListAdapter extends RecyclerView.Adapter<RecyclerVi
         context = parent.getContext().getApplicationContext();
         if (viewType == AD_VIEW_TYPE) {
             ViewGroup adView = FeedInterstitialContainer.getAdView(context);
-//            RelativeLayout.LayoutParams adViewLayoutParamsl = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-//            RelativeLayout adView = new RelativeLayout(context);
-//            adView.setLayoutParams(adViewLayoutParamsl);
-
             AdHolder adHolder = new AdHolder(adView);
             adHolder.setParent(parent);
             return adHolder;
@@ -68,14 +64,6 @@ public class FeedInterstitialListAdapter extends RecyclerView.Adapter<RecyclerVi
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
         if (holder.getItemViewType() == AD_VIEW_TYPE && holder instanceof AdHolder) {
             try {
-//                FeedInterstitialContainer container = Controller.getInstance().getStoredContainer();
-//                if (container != null) {
-//                    container.bindTo((ViewGroup)holder.itemView, ((AdHolder)holder).parent);
-//                } else {
-//                    RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(
-//                            ViewGroup.LayoutParams.WRAP_CONTENT, 0);
-//                    holder.itemView.setLayoutParams(params);
-//                }
                 FeedInterstitialPlacement placement = (FeedInterstitialPlacement)Controller.getInstance().getPlacement(placementId);
                 FeedInterstitialContainer container = placement.getContainer(context, requestId, position);
                 container.bindTo((ViewGroup) holder.itemView, ((AdHolder)holder).parent);
