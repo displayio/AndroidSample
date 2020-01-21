@@ -16,6 +16,7 @@ import com.brandio.ads.Placement;
 import com.brandio.ads.ads.Ad;
 import com.brandio.ads.ads.supers.FeedInterstittialAdInterface;
 import com.brandio.ads.containers.FeedInterstitialContainer;
+import com.brandio.ads.exceptions.DIOError;
 import com.brandio.ads.exceptions.DioSdkException;
 import com.brandio.ads.listeners.AdLoadListener;
 import com.brandio.ads.listeners.AdRequestListener;
@@ -103,7 +104,7 @@ public class LoadInfeedActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailedToLoad() {
+                    public void onFailedToLoad(DIOError error) {
                         Toast.makeText(LoadInfeedActivity.this, "Ad for placement " + placementId + " failed to load", Toast.LENGTH_LONG).show();
                     }
                 });
@@ -116,12 +117,11 @@ public class LoadInfeedActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNoAds() {
+            public void onNoAds(DIOError error) {
                 Toast.makeText(LoadInfeedActivity.this, "No Ads placement " + placementId, Toast.LENGTH_LONG).show();
             }
         });
 
-        adRequest.setDetailsRequired(true);
         adRequest.requestAd();
     }
 

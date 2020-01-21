@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 
 import com.brandio.ads.Controller;
+import com.brandio.ads.exceptions.DIOError;
 import com.brandio.ads.listeners.SdkInitListener;
 import com.brandio.androidsample.utils.RecyclerTouchListener;
 
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
         Controller ctrl = Controller.getInstance();
         if (!ctrl.isInitialized()) {
-            ctrl.getInstance().init(this, APP_ID, new SdkInitListener() {
+            ctrl.getInstance().init(this, null, APP_ID, new SdkInitListener() {
                 @Override
                 public void onInit() {
                     Log.i(TAG, "Controller initialized");
@@ -48,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
                 }
 
                 @Override
-                public void onInitError(String msg) {
-                    Log.e(TAG, msg);
+                public void onInitError(DIOError error) {
+                    Log.e(TAG, error.getMessage());
                 }
             });
         } else {
