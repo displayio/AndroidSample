@@ -45,8 +45,8 @@ public class ShowListWithInfeedActivity extends AppCompatActivity {
                 recyclerView.setAdapter(new InfeedListAdapter(items, AD_POSITION, placementId, requestId));
                 break;
             }
-            case "FEED_INTERSTITIAL" :{
-                recyclerView.setAdapter(new FeedInterstitialListAdapter(items, AD_POSITION, placementId, requestId));
+            case "INTERSCROLLER" :{
+                recyclerView.setAdapter(new InterscrollerListAdapter(items, AD_POSITION, placementId, requestId));
 
                 break;
             }

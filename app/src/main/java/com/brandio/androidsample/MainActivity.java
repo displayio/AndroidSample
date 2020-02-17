@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
             new PlacementListItem("5369", PlacementListItem.Type.INFEED),                   // Html Infeed
             new PlacementListItem("6428", PlacementListItem.Type.BANNER),                   // Html Banner
             new PlacementListItem("6429", PlacementListItem.Type.MEDIUM_RECTABGLE),         // Html Medium rectangle
-            new PlacementListItem("6430", PlacementListItem.Type.FEED_INTERSTITIAL),        // Feed Interstitial
+            new PlacementListItem("6430", PlacementListItem.Type.INTERSCROLLER),        // Interscroller
     };
 
     @Override
@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (data[position].type) {
                     case INFEED:
-                    case FEED_INTERSTITIAL:
+                    case INTERSCROLLER:
                         {
                         Intent intent = new Intent(MainActivity.this, LoadInfeedActivity.class);
                         intent.putExtra(PLACEMENT_ID, data[position].id);

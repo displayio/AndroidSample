@@ -7,7 +7,7 @@ public class PlacementListItem {
         INFEED,
         BANNER,
         MEDIUM_RECTABGLE,
-        FEED_INTERSTITIAL,
+        INTERSCROLLER,
         REWARDED_VIDEO
     }
 

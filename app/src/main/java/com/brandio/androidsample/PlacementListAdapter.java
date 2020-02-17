@@ -69,7 +69,7 @@ public class PlacementListAdapter extends RecyclerView.Adapter<PlacementListAdap
                 return "Medium Rectangle";
 
             case 7:
-                return "Feed Interstitial";
+                return "Interscroller";
 
              default:
                  return "";

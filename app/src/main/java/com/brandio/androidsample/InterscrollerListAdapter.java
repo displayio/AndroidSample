@@ -6,18 +6,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.brandio.ads.Controller;
-import com.brandio.ads.FeedInterstitialPlacement;
-import com.brandio.ads.containers.FeedInterstitialContainer;
+import com.brandio.ads.InterscrollerPlacement;
+import com.brandio.ads.containers.InterscrollerContainer;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FeedInterstitialListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+public class InterscrollerListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
-    private static final String TAG = "FeedInterstitialAdapter";
+    private static final String TAG = "InterscrollerAdapter";
     private static final byte AD_VIEW_TYPE = 0;
     private static final byte SIMPLE_VIEW_TYPE = 2;
 
@@ -26,7 +25,7 @@ public class FeedInterstitialListAdapter extends RecyclerView.Adapter<RecyclerVi
     private List<Integer> items;
     private Context context;
 
-    public FeedInterstitialListAdapter(List<Integer> items, int adPosition, String placementId, String requestId) {
+    public InterscrollerListAdapter(List<Integer> items, int adPosition, String placementId, String requestId) {
         this.placementId = placementId;
         this.requestId = requestId;
 
@@ -41,7 +40,7 @@ public class FeedInterstitialListAdapter extends RecyclerView.Adapter<RecyclerVi
 
         context = parent.getContext().getApplicationContext();
         if (viewType == AD_VIEW_TYPE) {
-            ViewGroup adView = FeedInterstitialContainer.getAdView(context);
+            ViewGroup adView = InterscrollerContainer.getAdView(context);
             AdHolder adHolder = new AdHolder(adView);
             adHolder.setParent(parent);
             return adHolder;
@@ -64,8 +63,8 @@ public class FeedInterstitialListAdapter extends RecyclerView.Adapter<RecyclerVi
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
         if (holder.getItemViewType() == AD_VIEW_TYPE && holder instanceof AdHolder) {
             try {
-                FeedInterstitialPlacement placement = (FeedInterstitialPlacement)Controller.getInstance().getPlacement(placementId);
-                FeedInterstitialContainer container = placement.getContainer(context, requestId, position);
+                InterscrollerPlacement placement = (InterscrollerPlacement)Controller.getInstance().getPlacement(placementId);
+                InterscrollerContainer container = placement.getContainer(context, requestId, position);
                 container.bindTo((ViewGroup) holder.itemView, ((AdHolder)holder).parent);
 
             } catch (Exception e) {
