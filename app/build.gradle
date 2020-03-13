@@ -31,6 +31,6 @@ dependencies {
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
 //    implementation project(":sdk-4.0.0")
-    implementation 'com.brandio.ads:sdk:4.1.0'
+    implementation 'com.brandio.ads:sdk:4.2.0'
 
 }
