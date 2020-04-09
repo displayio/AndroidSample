@@ -8,7 +8,8 @@ public class PlacementListItem {
         BANNER,
         MEDIUM_RECTABGLE,
         INTERSCROLLER,
-        REWARDED_VIDEO
+        REWARDED_VIDEO,
+        OUTSTREAMVIDEO;
     }
 
     String id;

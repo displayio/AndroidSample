@@ -6,6 +6,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import com.brandio.ads.Controller;
+import com.brandio.ads.ads.OutStreamVideo;
+import com.brandio.ads.listeners.OutStreamVideoSnapListener;
 
 import java.util.ArrayList;
 
@@ -35,7 +37,7 @@ public class ShowListWithInfeedActivity extends AppCompatActivity {
 
         recyclerView = findViewById(R.id.recycler_view_infeeds);
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        ArrayList<Integer> items = new ArrayList<>();
+        final ArrayList<Integer> items = new ArrayList<>();
         for (int i = 1; i <= 40; i++) {
             items.add(i);
         }
@@ -45,9 +47,22 @@ public class ShowListWithInfeedActivity extends AppCompatActivity {
                 recyclerView.setAdapter(new InfeedListAdapter(items, AD_POSITION, placementId, requestId));
                 break;
             }
+            case "OUTSTREAMVIDEO" :{
+                final OutStreamVideoListAdapter adapter = new OutStreamVideoListAdapter(items, AD_POSITION, placementId, requestId);
+                recyclerView.setAdapter(adapter);
+
+                    recyclerView.addOnScrollListener(new OutStreamVideoSnapListener(recyclerView.getContext(), AD_POSITION) {
+                        @Override
+                        public void removeAdPositionFromList(int adPosition) {
+                            items.remove(AD_POSITION);
+                            adapter.notifyDataSetChanged();
+                        }
+                    });
+
+                break;
+            }
             case "INTERSCROLLER" :{
                 recyclerView.setAdapter(new InterscrollerListAdapter(items, AD_POSITION, placementId, requestId));
-
                 break;
             }
         }

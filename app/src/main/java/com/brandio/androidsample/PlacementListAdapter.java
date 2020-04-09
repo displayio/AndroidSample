@@ -71,6 +71,9 @@ public class PlacementListAdapter extends RecyclerView.Adapter<PlacementListAdap
             case 7:
                 return "Interscroller";
 
+            case 8:
+                return "OutStreamVideo";
+
              default:
                  return "";
         }
