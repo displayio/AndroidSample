@@ -2,6 +2,7 @@ package com.brandio.androidsample;
 
 import android.app.Activity;
 import android.graphics.Rect;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.Window;
+import android.view.WindowManager;
 
 import com.brandio.ads.Controller;
 import com.brandio.ads.ads.OutStreamVideo;
@@ -35,6 +37,16 @@ public class ShowListWithInfeedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_list_with_infeeds);
+
+//        final Window window = getWindow();
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            window.setFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION | WindowManager.LayoutParams
+//                    .FLAG_TRANSLUCENT_STATUS, WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION | WindowManager
+//                    .LayoutParams.FLAG_TRANSLUCENT_STATUS);
+//        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.P) {
+//            window.getAttributes().layoutInDisplayCutoutMode = WindowManager.LayoutParams.LAYOUT_IN_DISPLAY_CUTOUT_MODE_SHORT_EDGES;
+//        }
 
         placementId = getIntent().getStringExtra(PLACEMENT_ID);
         requestId = getIntent().getStringExtra(REQUEST_ID);
