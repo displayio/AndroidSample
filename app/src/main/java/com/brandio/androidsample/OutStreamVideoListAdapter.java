@@ -34,7 +34,7 @@ public class OutStreamVideoListAdapter extends RecyclerView.Adapter<RecyclerView
         this.placementId = placementId;
         this.requestId = requestId;
 
-        this.items = new ArrayList<>();
+        this.items = items;
         this.items.addAll(items);
         this.items.add(adPosition, null);
     }

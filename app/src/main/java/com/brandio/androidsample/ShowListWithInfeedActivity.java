@@ -1,9 +1,15 @@
 package com.brandio.androidsample;
 
+import android.app.Activity;
+import android.graphics.Rect;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
+import android.view.MotionEvent;
+import android.view.Window;
 
 import com.brandio.ads.Controller;
 import com.brandio.ads.ads.OutStreamVideo;
@@ -54,7 +60,7 @@ public class ShowListWithInfeedActivity extends AppCompatActivity {
                     recyclerView.addOnScrollListener(new OutStreamVideoSnapListener(recyclerView.getContext(), AD_POSITION) {
                         @Override
                         public void removeAdPositionFromList(int adPosition) {
-                            items.remove(AD_POSITION);
+                            items.remove(adPosition);
                             adapter.notifyDataSetChanged();
                         }
                     });
@@ -66,7 +72,6 @@ public class ShowListWithInfeedActivity extends AppCompatActivity {
                 break;
             }
         }
-
     }
 
     @Override
