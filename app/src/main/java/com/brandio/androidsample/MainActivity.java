@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.brandio.ads.Controller;
 import com.brandio.ads.exceptions.DIOError;
@@ -51,6 +52,10 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onInitError(DIOError error) {
+                    Toast.makeText(MainActivity.this,
+                            "Error initialize SDK, check your internet connection",
+                            Toast.LENGTH_LONG)
+                            .show();
                     Log.e(TAG, error.getMessage());
                 }
             });
