@@ -69,7 +69,7 @@ public class ShowListWithInfeedActivity extends AppCompatActivity {
                 final OutStreamVideoListAdapter adapter = new OutStreamVideoListAdapter(items, AD_POSITION, placementId, requestId);
                 recyclerView.setAdapter(adapter);
 
-                    recyclerView.addOnScrollListener(new OutStreamVideoSnapListener(recyclerView.getContext(), AD_POSITION) {
+                    recyclerView.addOnScrollListener(new OutStreamVideoSnapListener(AD_POSITION) {
                         @Override
                         public void removeAdPositionFromList(int adPosition) {
                             items.remove(adPosition);
