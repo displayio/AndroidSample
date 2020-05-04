@@ -30,12 +30,8 @@ dependencies {
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
-<<<<<<< HEAD
-
 //    implementation project(":sdk-4.3.0")
-=======
-//    implementation project(":sdk-4.2.2")
->>>>>>> 34d8ae98b6a15dbf0e46eab8bf881134c28c453c
+
     implementation 'com.brandio.ads:sdk:4.3.0'
 
 }
