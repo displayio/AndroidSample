@@ -66,9 +66,9 @@ public class OutStreamVideoListAdapter extends RecyclerView.Adapter<RecyclerView
         if (holder.getItemViewType() == TYPE_AD && holder instanceof OutStreamVideoListAdapter.AdViewHolder) {
             try {
                 OutStreamVideoPlacement outStreamVideoPlacement = (OutStreamVideoPlacement) Controller.getInstance().getPlacement(placementId);
-                outStreamVideoPlacement.setTextColor(Color.RED);
-                outStreamVideoPlacement.setExpandedBackgroundColor(Color.BLACK);
-                outStreamVideoPlacement.setCollapsedBackgroundColor(Color.BLUE);
+//                outStreamVideoPlacement.setTextColor(Color.RED);
+//                outStreamVideoPlacement.setExpandedBackgroundColor(Color.BLACK);
+//                outStreamVideoPlacement.setCollapsedBackgroundColor(Color.BLUE);
                 OutStreamVideoAdContainer container = outStreamVideoPlacement.getOutStreamVideoContainer(context, requestId);
                 container.bindTo((ViewGroup) holder.itemView);
             } catch (DioSdkException e) {
