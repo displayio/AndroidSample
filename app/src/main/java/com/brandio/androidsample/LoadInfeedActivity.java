@@ -48,11 +48,12 @@ public class LoadInfeedActivity extends AppCompatActivity {
         });
 
         showButton = findViewById(R.id.button_show_infeed);
-        showButton.setEnabled(true);
+        showButton.setEnabled(false);
 
         showButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                showButton.setEnabled(false);
                 Intent intent = new Intent(LoadInfeedActivity.this, ShowListWithInfeedActivity.class);
                 intent.putExtra(MainActivity.PLACEMENT_ID, placementId);
                 intent.putExtra(MainActivity.REQUEST_ID, requestId);

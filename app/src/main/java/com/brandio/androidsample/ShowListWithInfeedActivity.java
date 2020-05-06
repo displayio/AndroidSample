@@ -1,20 +1,11 @@
 package com.brandio.androidsample;
 
-import android.app.Activity;
-import android.graphics.Rect;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.MotionEvent;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.brandio.ads.Controller;
-import com.brandio.ads.ads.OutStreamVideo;
 import com.brandio.ads.listeners.OutStreamVideoSnapListener;
 
 import java.util.ArrayList;

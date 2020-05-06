@@ -15,19 +15,6 @@ public class PlacementListAdapter extends RecyclerView.Adapter<PlacementListAdap
         this.data = data;
     }
 
-    public static class MyViewHolder extends RecyclerView.ViewHolder
-    {
-        TextView textId;
-        TextView textType;
-
-        public MyViewHolder(View v) {
-            super(v);
-
-            textId = v.findViewById(R.id.text_id);
-            textType = v.findViewById(R.id.text_type);
-        }
-    }
-
     @Override
     public PlacementListAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_item_main, parent, false);
@@ -72,10 +59,25 @@ public class PlacementListAdapter extends RecyclerView.Adapter<PlacementListAdap
                 return "Interscroller";
 
             case 8:
-                return "OutStreamVideo";
+                return "OutStreamVideo Snap ON";
 
-             default:
-                 return "";
+            case 9:
+                return "OutStreamVideo Snap OFF";
+
+            default:
+                return "";
+        }
+    }
+
+    public static class MyViewHolder extends RecyclerView.ViewHolder {
+        TextView textId;
+        TextView textType;
+
+        public MyViewHolder(View v) {
+            super(v);
+
+            textId = v.findViewById(R.id.text_id);
+            textType = v.findViewById(R.id.text_type);
         }
     }
 }
