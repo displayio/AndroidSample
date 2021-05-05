@@ -32,6 +32,6 @@ dependencies {
 
 //    implementation project(":sdk-4.3.0")
 
-    implementation 'com.brandio.ads:sdk:4.5.1'
+    implementation 'com.brandio.ads:sdk:4.5.2'
 
 }

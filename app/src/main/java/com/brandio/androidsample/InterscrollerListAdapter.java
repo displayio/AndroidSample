@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import com.brandio.ads.Controller;
 import com.brandio.ads.InterscrollerPlacement;
 import com.brandio.ads.containers.InterscrollerContainer;
+import com.brandio.ads.exceptions.DioSdkException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,10 +41,14 @@ public class InterscrollerListAdapter extends RecyclerView.Adapter<RecyclerView.
 
         context = parent.getContext().getApplicationContext();
         if (viewType == AD_VIEW_TYPE) {
+            try {
+                InterscrollerPlacement placement = (InterscrollerPlacement) Controller.getInstance().getPlacement(placementId);
+                placement.setParentRecyclerView((RecyclerView) parent);
+            } catch (DioSdkException e) {
+                e.printStackTrace();
+            }
             ViewGroup adView = InterscrollerContainer.getAdView(context);
-            AdHolder adHolder = new AdHolder(adView);
-            adHolder.setParent(parent);
-            return adHolder;
+            return new AdHolder(adView);
         }
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.infeed_list_item, parent, false);
         return new ViewHolder(view);
@@ -66,7 +71,7 @@ public class InterscrollerListAdapter extends RecyclerView.Adapter<RecyclerView.
                 InterscrollerPlacement placement = (InterscrollerPlacement)Controller.getInstance().getPlacement(placementId);
                 InterscrollerContainer container = placement.getContainer(context, requestId, position);
 //                container.setInterscrollerHeight(1500);
-                container.bindTo((ViewGroup) holder.itemView, ((AdHolder)holder).parent);
+                container.bindTo((ViewGroup) holder.itemView);
 
             } catch (Exception e) {
                 e.printStackTrace();

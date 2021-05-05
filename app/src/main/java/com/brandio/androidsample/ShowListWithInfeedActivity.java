@@ -79,7 +79,6 @@ public class ShowListWithInfeedActivity extends AppCompatActivity {
 
     @Override
     protected void onDestroy() {
-        Controller.getInstance().setStoredContainer(null);
         super.onDestroy();
     }
 }
