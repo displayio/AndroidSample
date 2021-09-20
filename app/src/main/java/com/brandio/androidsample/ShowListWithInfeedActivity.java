@@ -1,12 +1,11 @@
 package com.brandio.androidsample;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.brandio.ads.Controller;
-import com.brandio.ads.listeners.OutStreamVideoSnapListener;
+import com.brandio.ads.listeners.HeadlineVideoSnapListener;
 
 import java.util.ArrayList;
 
@@ -57,10 +56,10 @@ public class ShowListWithInfeedActivity extends AppCompatActivity {
                 break;
             }
             case "OUTSTREAMVIDEO" :{
-                final OutStreamVideoListAdapter adapter = new OutStreamVideoListAdapter(items, AD_POSITION, placementId, requestId);
+                final HeadlineVideoListAdapter adapter = new HeadlineVideoListAdapter(items, AD_POSITION, placementId, requestId);
                 recyclerView.setAdapter(adapter);
 
-                    recyclerView.addOnScrollListener(new OutStreamVideoSnapListener(AD_POSITION) {
+                    recyclerView.addOnScrollListener(new HeadlineVideoSnapListener(AD_POSITION) {
                         @Override
                         public void removeAdPositionFromList(int adPosition) {
                             items.remove(adPosition);

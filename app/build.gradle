@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion 30
     defaultConfig {
         applicationId "com.brandio.androidsample"
-        minSdkVersion 14
-        targetSdkVersion 28
+        minSdkVersion 16
+        targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
     }
     buildTypes {
         release {
@@ -21,18 +21,16 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation "com.android.support:appcompat-v7:$systemVersion"
-    implementation "com.android.support:design:$systemVersion"
-    implementation "com.android.support:recyclerview-v7:$systemVersion"
+    implementation 'androidx.appcompat:appcompat:1.3.1'
+    implementation 'com.google.android.material:material:1.4.0'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
 
-    implementation 'com.android.support.constraint:constraint-layout:1.1.3'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+//    implementation 'androidx.constraintlayout:constraintlayout:2.1.0'
+    testImplementation 'junit:junit:4.13.1'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+//    implementation "androidx.browser:browser:1.3.0"
 
-//    implementation project(":sdk-4.3.0")
-
-    implementation 'com.brandio.ads:sdk:4.5.2.1'
-//    implementation 'beta.brandio.ads:sdk:4.5.2.1'
-
+    implementation 'com.brandio.ads:sdk:4.6.0'
+//    implementation 'beta.brandio.ads:sdk:4.6.6'
 }
