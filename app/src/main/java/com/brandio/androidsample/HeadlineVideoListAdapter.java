@@ -17,7 +17,7 @@ import com.brandio.ads.exceptions.DioSdkException;
 import java.util.List;
 
 public class HeadlineVideoListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-    private static final String TAG = "OutStreamListAdapter";
+    private static final String TAG = "HeadlineListAdapter";
     private static final int TYPE_AD = 0;
     private static final int TYPE_CONTENT = 1;
 
@@ -61,11 +61,11 @@ public class HeadlineVideoListAdapter extends RecyclerView.Adapter<RecyclerView.
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
         if (holder.getItemViewType() == TYPE_AD && holder instanceof HeadlineVideoListAdapter.AdViewHolder) {
             try {
-                HeadlineVideoPlacement outStreamVideoPlacement = (HeadlineVideoPlacement) Controller.getInstance().getPlacement(placementId);
-//                outStreamVideoPlacement.setTextColor(Color.RED);
-//                outStreamVideoPlacement.setExpandedBackgroundColor(Color.BLACK);
-//                outStreamVideoPlacement.setCollapsedBackgroundColor(Color.BLUE);
-                HeadlineVideoAdContainer container = outStreamVideoPlacement.getHeadLineVideoContainer(context, requestId);
+                HeadlineVideoPlacement headlineVideoPlacement = (HeadlineVideoPlacement) Controller.getInstance().getPlacement(placementId);
+//                headlineVideoPlacement.setTextColor(Color.RED);
+//                headlineVideoPlacement.setExpandedBackgroundColor(Color.BLACK);
+//                headlineVideoPlacement.setCollapsedBackgroundColor(Color.BLUE);
+                HeadlineVideoAdContainer container = headlineVideoPlacement.getHeadLineVideoContainer(context, requestId);
                 container.bindTo((ViewGroup) holder.itemView);
             } catch (DioSdkException e) {
                 Log.e(TAG, e.getLocalizedMessage());

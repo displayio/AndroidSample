@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
             new PlacementListItem("6428", PlacementListItem.Type.BANNER),                 // Html Banner
             new PlacementListItem("6429", PlacementListItem.Type.MEDIUM_RECTABGLE),       // Html Medium rectangle
             new PlacementListItem("6430", PlacementListItem.Type.INTERSCROLLER),          // Interscroller
-            new PlacementListItem("6735", PlacementListItem.Type.OUTSTREAMVIDEO),         // OutStreamVideo Snap
-            new PlacementListItem("6955", PlacementListItem.Type.OUTSTREAMVIDEO),         // OutStreamVideo NoSnap
+            new PlacementListItem("6735", PlacementListItem.Type.HEADLINEVIDEO),         // HeadlineVideo Snap
+            new PlacementListItem("6955", PlacementListItem.Type.HEADLINEVIDEO),         // HeadlineVideo NoSnap
     };
 
     @Override
@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (data[position].type) {
                     case INFEED:
                     case INTERSCROLLER:
-                    case OUTSTREAMVIDEO:
+                    case HEADLINEVIDEO:
                         {
                         Intent intent = new Intent(MainActivity.this, LoadInfeedActivity.class);
                         intent.putExtra(PLACEMENT_ID, data[position].id);

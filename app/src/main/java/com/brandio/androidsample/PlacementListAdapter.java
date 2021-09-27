@@ -59,10 +59,10 @@ public class PlacementListAdapter extends RecyclerView.Adapter<PlacementListAdap
                 return "Interscroller";
 
             case 8:
-                return "OutStreamVideo Snap ON";
+                return "HeadlineVideo Snap ON";
 
             case 9:
-                return "OutStreamVideo Snap OFF";
+                return "HeadlineVideo Snap OFF";
 
             default:
                 return "";

@@ -71,6 +71,7 @@ public class InterscrollerListAdapter extends RecyclerView.Adapter<RecyclerView.
                 InterscrollerPlacement placement = (InterscrollerPlacement)Controller.getInstance().getPlacement(placementId);
                 InterscrollerContainer container = placement.getContainer(context, requestId, position);
 //                container.setInterscrollerHeight(1500);
+//                container.setInterscrollerOffset(250);
                 container.bindTo((ViewGroup) holder.itemView);
 
             } catch (Exception e) {
