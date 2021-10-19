@@ -55,7 +55,7 @@ public class ShowListWithInfeedActivity extends AppCompatActivity {
                 recyclerView.setAdapter(new InfeedListAdapter(items, AD_POSITION, placementId, requestId));
                 break;
             }
-            case "OUTSTREAMVIDEO" :{
+            case "HEADLINEVIDEO" :{
                 final HeadlineVideoListAdapter adapter = new HeadlineVideoListAdapter(items, AD_POSITION, placementId, requestId);
                 recyclerView.setAdapter(adapter);
 
