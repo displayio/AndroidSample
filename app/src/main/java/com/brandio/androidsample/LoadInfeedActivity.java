@@ -15,6 +15,7 @@ import com.brandio.ads.Placement;
 import com.brandio.ads.ads.Ad;
 import com.brandio.ads.exceptions.DIOError;
 import com.brandio.ads.exceptions.DioSdkException;
+import com.brandio.ads.listeners.AdEventListener;
 import com.brandio.ads.listeners.AdLoadListener;
 import com.brandio.ads.listeners.AdRequestListener;
 
@@ -90,15 +91,33 @@ public class LoadInfeedActivity extends AppCompatActivity {
                     public void onLoaded(Ad ad) {
                         requestId = adRequest.getId();
                         showButton.setEnabled(true);
-//                        if (ad instanceof InterscrollerAdInterface){
-//                            try {
-//                                InterscrollerPlacement placement = (InterscrollerPlacement) Controller.getInstance().getPlacement(placementId);
-//                                InterscrollerContainer container = placement.getContainer(getApplicationContext(), requestId, AD_POSITION);
-//                                Controller.getInstance().setStoredContainer(container);
-//                            } catch (DioSdkException e) {
-//                                e.printStackTrace();
-//                            }
-//                        }
+
+                        ad.setEventListener(new AdEventListener() {
+                            @Override
+                            public void onShown(Ad ad) {
+                                Log.e(TAG, "onShown");
+                            }
+
+                            @Override
+                            public void onFailedToShow(Ad ad) {
+                                Log.e(TAG, "onFailedToShow");
+                            }
+
+                            @Override
+                            public void onClicked(Ad ad) {
+                                Log.e(TAG, "onClicked");
+                            }
+
+                            @Override
+                            public void onClosed(Ad ad) {
+                                Log.e(TAG, "onClosed");
+                            }
+
+                            @Override
+                            public void onAdCompleted(Ad ad) {
+                                Log.e(TAG, "onAdCompleted");
+                            }
+                        });
                     }
 
                     @Override
