@@ -62,6 +62,7 @@ public class ShowListWithInfeedActivity extends AppCompatActivity {
                     recyclerView.addOnScrollListener(new HeadlineVideoSnapListener(AD_POSITION) {
                         @Override
                         public void removeAdPositionFromList(int adPosition) {
+                            // will be called when snap was occurred
                             items.remove(adPosition);
                             adapter.notifyDataSetChanged();
                         }
