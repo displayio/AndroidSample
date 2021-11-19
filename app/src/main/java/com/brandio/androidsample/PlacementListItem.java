@@ -14,9 +14,11 @@ public class PlacementListItem {
 
     String id;
     Type type;
+    String name;
 
-    public PlacementListItem(String id, Type type) {
+    public PlacementListItem(String id, Type type, String name) {
         this.id = id;
         this.type = type;
+        this.name = name;
     }
 }

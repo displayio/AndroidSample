@@ -25,16 +25,15 @@ public class MainActivity extends AppCompatActivity {
     private static final String APP_ID = "6494";
 
     private static final PlacementListItem[] data = {
-            new PlacementListItem("4654", PlacementListItem.Type.INTERSTITIAL),           // Html
-            new PlacementListItem("3231", PlacementListItem.Type.INTERSTITIAL),           // Video
-            new PlacementListItem("3266", PlacementListItem.Type.REWARDED_VIDEO),         // Rewarded Video
-            new PlacementListItem("4655", PlacementListItem.Type.INFEED),                 // Video Infeed
-            new PlacementListItem("5369", PlacementListItem.Type.INFEED),                 // Html Infeed
-            new PlacementListItem("6428", PlacementListItem.Type.BANNER),                 // Html Banner
-            new PlacementListItem("6429", PlacementListItem.Type.MEDIUM_RECTABGLE),       // Html Medium rectangle
-            new PlacementListItem("6430", PlacementListItem.Type.INTERSCROLLER),          // Interscroller
-            new PlacementListItem("6735", PlacementListItem.Type.HEADLINEVIDEO),         // HeadlineVideo Snap
-            new PlacementListItem("6955", PlacementListItem.Type.HEADLINEVIDEO),         // HeadlineVideo NoSnap
+            new PlacementListItem("4654", PlacementListItem.Type.INTERSTITIAL,  "Interstitial Display"),
+            new PlacementListItem("3231", PlacementListItem.Type.INTERSTITIAL, "Interstitial Video"),
+            new PlacementListItem("4655", PlacementListItem.Type.INFEED, "Infeed Video"),
+            new PlacementListItem("5369", PlacementListItem.Type.INFEED, "Infeed Display"),
+            new PlacementListItem("6428", PlacementListItem.Type.BANNER, "Banner"),
+            new PlacementListItem("6429", PlacementListItem.Type.MEDIUM_RECTABGLE, "Medium Rectangle"),
+            new PlacementListItem("6430", PlacementListItem.Type.INTERSCROLLER, "Interscroller"),
+            new PlacementListItem("6735", PlacementListItem.Type.HEADLINEVIDEO, "HeadlineVideo Snap ON"),
+            new PlacementListItem("6955", PlacementListItem.Type.HEADLINEVIDEO, "HeadlineVideo Snap OFF"),
     };
 
     @Override

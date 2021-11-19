@@ -33,40 +33,8 @@ public class PlacementListAdapter extends RecyclerView.Adapter<PlacementListAdap
     }
 
     private String getTypeAsString(int position) {
-        switch (position) {
-            case 0:
-                return "Interstitial Display";
+        return data[position].name;
 
-            case 1:
-                return "Interstitial Video";
-
-            case 2:
-                return "Rewarded Video";
-
-            case 3:
-                return "Infeed Video";
-
-            case 4:
-                return "Infeed Display";
-
-            case 5:
-                return "Banner";
-
-            case 6:
-                return "Medium Rectangle";
-
-            case 7:
-                return "Interscroller";
-
-            case 8:
-                return "HeadlineVideo Snap ON";
-
-            case 9:
-                return "HeadlineVideo Snap OFF";
-
-            default:
-                return "";
-        }
     }
 
     public static class MyViewHolder extends RecyclerView.ViewHolder {
