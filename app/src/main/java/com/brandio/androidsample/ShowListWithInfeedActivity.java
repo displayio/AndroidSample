@@ -5,7 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.brandio.ads.listeners.HeadlineVideoSnapListener;
+import com.brandio.ads.listeners.HeadlineSnapListener;
 
 import java.util.ArrayList;
 
@@ -55,11 +55,11 @@ public class ShowListWithInfeedActivity extends AppCompatActivity {
                 recyclerView.setAdapter(new InfeedListAdapter(items, AD_POSITION, placementId, requestId));
                 break;
             }
-            case "HEADLINEVIDEO" :{
-                final HeadlineVideoListAdapter adapter = new HeadlineVideoListAdapter(items, AD_POSITION, placementId, requestId);
+            case "HEADLINE" :{
+                final HeadlineListAdapter adapter = new HeadlineListAdapter(items, AD_POSITION, placementId, requestId);
                 recyclerView.setAdapter(adapter);
 
-                    recyclerView.addOnScrollListener(new HeadlineVideoSnapListener(AD_POSITION) {
+                    recyclerView.addOnScrollListener(new HeadlineSnapListener(AD_POSITION) {
                         @Override
                         public void removeAdPositionFromList(int adPosition) {
                             // will be called when snap was occurred

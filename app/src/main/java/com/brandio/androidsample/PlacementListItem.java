@@ -9,7 +9,7 @@ public class PlacementListItem {
         MEDIUM_RECTABGLE,
         INTERSCROLLER,
         REWARDED_VIDEO,
-        HEADLINEVIDEO;
+        HEADLINE;
     }
 
     String id;
