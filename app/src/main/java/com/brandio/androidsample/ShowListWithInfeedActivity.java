@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.brandio.ads.ads.AdUnitType;
 import com.brandio.ads.listeners.HeadlineSnapListener;
 
 import java.util.ArrayList;
@@ -50,12 +51,17 @@ public class ShowListWithInfeedActivity extends AppCompatActivity {
             items.add(i);
         }
 
-        switch (adUnitType){
-            case "INFEED" :{
+        AdUnitType type = AdUnitType.valueOf(adUnitType);
+        switch (type){
+            case INFEED :{
                 recyclerView.setAdapter(new InfeedListAdapter(items, AD_POSITION, placementId, requestId));
                 break;
             }
-            case "HEADLINE" :{
+            case SHOPPABLE :{
+                recyclerView.setAdapter(new ShoppableListAdapter(items, AD_POSITION, placementId, requestId));
+                break;
+            }
+            case HEADLINE :{
                 final HeadlineListAdapter adapter = new HeadlineListAdapter(items, AD_POSITION, placementId, requestId);
                 recyclerView.setAdapter(adapter);
 
@@ -70,7 +76,7 @@ public class ShowListWithInfeedActivity extends AppCompatActivity {
 
                 break;
             }
-            case "INTERSCROLLER" :{
+            case INTERSCROLLER :{
                 recyclerView.setAdapter(new InterscrollerListAdapter(items, AD_POSITION, placementId, requestId));
                 break;
             }

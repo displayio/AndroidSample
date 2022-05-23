@@ -1,22 +1,16 @@
 package com.brandio.androidsample;
 
+import com.brandio.ads.ads.AdUnitType;
+
 public class PlacementListItem {
 
-    enum Type {
-        INTERSTITIAL,
-        INFEED,
-        BANNER,
-        MEDIUM_RECTABGLE,
-        INTERSCROLLER,
-        REWARDED_VIDEO,
-        HEADLINE;
-    }
+
 
     String id;
-    Type type;
+    AdUnitType type;
     String name;
 
-    public PlacementListItem(String id, Type type, String name) {
+    public PlacementListItem(String id, AdUnitType type, String name) {
         this.id = id;
         this.type = type;
         this.name = name;

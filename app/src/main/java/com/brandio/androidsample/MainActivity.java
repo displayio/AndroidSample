@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.brandio.ads.Controller;
+import com.brandio.ads.ads.AdUnitType;
 import com.brandio.ads.exceptions.DIOError;
 import com.brandio.ads.listeners.SdkInitListener;
 import com.brandio.androidsample.utils.RecyclerTouchListener;
@@ -25,15 +26,16 @@ public class MainActivity extends AppCompatActivity {
     private static final String APP_ID = "6494";
 
     private static final PlacementListItem[] data = {
-            new PlacementListItem("4654", PlacementListItem.Type.INTERSTITIAL,  "Interstitial Display"),
-            new PlacementListItem("3231", PlacementListItem.Type.INTERSTITIAL, "Interstitial Video"),
-            new PlacementListItem("4655", PlacementListItem.Type.INFEED, "Infeed Video"),
-            new PlacementListItem("5369", PlacementListItem.Type.INFEED, "Infeed Display"),
-            new PlacementListItem("6428", PlacementListItem.Type.BANNER, "Banner"),
-            new PlacementListItem("6429", PlacementListItem.Type.MEDIUM_RECTABGLE, "Medium Rectangle"),
-            new PlacementListItem("6430", PlacementListItem.Type.INTERSCROLLER, "Interscroller"),
-            new PlacementListItem("6735", PlacementListItem.Type.HEADLINE, "Headline Video"),
-            new PlacementListItem("6955", PlacementListItem.Type.HEADLINE, "Headline Display"),
+            new PlacementListItem("4654", AdUnitType.INTERSTITIAL,  "Interstitial Display"),
+            new PlacementListItem("3231", AdUnitType.INTERSTITIAL, "Interstitial Video"),
+            new PlacementListItem("4655", AdUnitType.INFEED, "Infeed Video"),
+            new PlacementListItem("5369", AdUnitType.INFEED, "Infeed Display"),
+            new PlacementListItem("6428", AdUnitType.BANNER, "Banner"),
+            new PlacementListItem("6429", AdUnitType.MEDIUMRECTANGLE, "Medium Rectangle"),
+            new PlacementListItem("6430", AdUnitType.INTERSCROLLER, "Interscroller"),
+            new PlacementListItem("6735", AdUnitType.HEADLINE, "Headline Video"),
+            new PlacementListItem("6955", AdUnitType.HEADLINE, "Headline Display"),
+            new PlacementListItem("7928", AdUnitType.SHOPPABLE, "Shoppable Video"),
     };
 
     @Override
@@ -80,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
                     case INFEED:
                     case INTERSCROLLER:
                     case HEADLINE:
+                    case SHOPPABLE:
                         {
                         Intent intent = new Intent(MainActivity.this, LoadInfeedActivity.class);
                         intent.putExtra(PLACEMENT_ID, data[position].id);
@@ -89,7 +92,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     case INTERSTITIAL:
-                    case REWARDED_VIDEO:
+                    case REWARDEDVIDEO:
                         {
                         Intent intent = new Intent(MainActivity.this, InterstitialActivity.class);
                         intent.putExtra(PLACEMENT_ID, data[position].id);
@@ -98,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     case BANNER:
-                    case MEDIUM_RECTABGLE:
+                    case MEDIUMRECTANGLE:
                         {
                         Intent intent = new Intent(MainActivity.this, BannerAndMediumRectangleActivity.class);
                         intent.putExtra(PLACEMENT_ID, data[position].id);
