@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
             new PlacementListItem("6430", AdUnitType.INTERSCROLLER, "Interscroller"),
             new PlacementListItem("6735", AdUnitType.HEADLINE, "Headline Video"),
             new PlacementListItem("6955", AdUnitType.HEADLINE, "Headline Display"),
-            new PlacementListItem("7928", AdUnitType.SHOPPABLE, "Shoppable Video"),
     };
 
     @Override
@@ -82,7 +81,6 @@ public class MainActivity extends AppCompatActivity {
                     case INFEED:
                     case INTERSCROLLER:
                     case HEADLINE:
-                    case SHOPPABLE:
                         {
                         Intent intent = new Intent(MainActivity.this, LoadInfeedActivity.class);
                         intent.putExtra(PLACEMENT_ID, data[position].id);

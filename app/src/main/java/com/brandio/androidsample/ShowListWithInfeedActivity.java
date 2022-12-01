@@ -57,10 +57,6 @@ public class ShowListWithInfeedActivity extends AppCompatActivity {
                 recyclerView.setAdapter(new InfeedListAdapter(items, AD_POSITION, placementId, requestId));
                 break;
             }
-            case SHOPPABLE :{
-                recyclerView.setAdapter(new ShoppableListAdapter(items, AD_POSITION, placementId, requestId));
-                break;
-            }
             case HEADLINE :{
                 final HeadlineListAdapter adapter = new HeadlineListAdapter(items, AD_POSITION, placementId, requestId);
                 recyclerView.setAdapter(adapter);
