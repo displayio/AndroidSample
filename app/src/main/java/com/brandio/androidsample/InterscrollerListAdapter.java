@@ -44,6 +44,7 @@ public class InterscrollerListAdapter extends RecyclerView.Adapter<RecyclerView.
             try {
                 InterscrollerPlacement placement = (InterscrollerPlacement) Controller.getInstance().getPlacement(placementId);
                 placement.setParentRecyclerView((RecyclerView) parent);
+//                placement.setReveal(false);
             } catch (DioSdkException e) {
                 e.printStackTrace();
             }
