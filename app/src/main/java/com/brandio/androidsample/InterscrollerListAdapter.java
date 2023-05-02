@@ -25,10 +25,12 @@ public class InterscrollerListAdapter extends RecyclerView.Adapter<RecyclerView.
     private String requestId;
     private List<Integer> items;
     private Context context;
+    private boolean isViewPager;
 
-    public InterscrollerListAdapter(List<Integer> items, int adPosition, String placementId, String requestId) {
+    public InterscrollerListAdapter(List<Integer> items, int adPosition, String placementId, String requestId, boolean isViewPager) {
         this.placementId = placementId;
         this.requestId = requestId;
+        this.isViewPager = isViewPager;
 
         this.items = new ArrayList<>();
         this.items.addAll(items);
@@ -43,15 +45,27 @@ public class InterscrollerListAdapter extends RecyclerView.Adapter<RecyclerView.
         if (viewType == AD_VIEW_TYPE) {
             try {
                 InterscrollerPlacement placement = (InterscrollerPlacement) Controller.getInstance().getPlacement(placementId);
-                placement.setParentRecyclerView((RecyclerView) parent);
-//                placement.setReveal(false);
+                if (isViewPager) {
+                    placement.setReveal(false);
+                    placement.setShowHeader(false);
+                } else {
+                    placement.setReveal(true);
+                    placement.setShowHeader(true);
+                    placement.setParentRecyclerView((RecyclerView) parent);
+                }
             } catch (DioSdkException e) {
                 e.printStackTrace();
             }
             ViewGroup adView = InterscrollerContainer.getAdView(context);
-            return new AdHolder(adView);
+            if (isViewPager) {  // need because ViewPager require match_parent sizes
+                adView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+            }
+            return new ViewHolder(adView);
         }
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.infeed_list_item, parent, false);
+        if (isViewPager) {
+            view.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        }
         return new ViewHolder(view);
 
     }
@@ -67,7 +81,7 @@ public class InterscrollerListAdapter extends RecyclerView.Adapter<RecyclerView.
 
     @Override
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
-        if (holder.getItemViewType() == AD_VIEW_TYPE && holder instanceof AdHolder) {
+        if (holder.getItemViewType() == AD_VIEW_TYPE) {
             try {
                 InterscrollerPlacement placement = (InterscrollerPlacement)Controller.getInstance().getPlacement(placementId);
                 InterscrollerContainer container = placement.getContainer(context, requestId, position);
@@ -84,16 +98,6 @@ public class InterscrollerListAdapter extends RecyclerView.Adapter<RecyclerView.
     @Override
     public int getItemCount() {
         return items.size();
-    }
-
-    static class AdHolder extends RecyclerView.ViewHolder {
-        public ViewGroup parent;
-        AdHolder(View itemView) {
-            super(itemView);
-        }
-        public void setParent(ViewGroup parent) {
-            this.parent = parent;
-        }
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder {

@@ -1,6 +1,12 @@
 package com.brandio.androidsample;
 
+import static com.brandio.androidsample.LoadInfeedActivity.AD_POSITION;
+import static com.brandio.androidsample.MainActivity.AD_UNIT_TYPE;
+import static com.brandio.androidsample.MainActivity.PLACEMENT_ID;
+import static com.brandio.androidsample.MainActivity.REQUEST_ID;
+
 import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -9,11 +15,6 @@ import com.brandio.ads.ads.AdUnitType;
 import com.brandio.ads.listeners.HeadlineSnapListener;
 
 import java.util.ArrayList;
-
-import static com.brandio.androidsample.LoadInfeedActivity.AD_POSITION;
-import static com.brandio.androidsample.MainActivity.AD_UNIT_TYPE;
-import static com.brandio.androidsample.MainActivity.PLACEMENT_ID;
-import static com.brandio.androidsample.MainActivity.REQUEST_ID;
 
 public class ShowListWithInfeedActivity extends AppCompatActivity {
 
@@ -52,28 +53,28 @@ public class ShowListWithInfeedActivity extends AppCompatActivity {
         }
 
         AdUnitType type = AdUnitType.valueOf(adUnitType);
-        switch (type){
-            case INFEED :{
+        switch (type) {
+            case INFEED: {
                 recyclerView.setAdapter(new InfeedListAdapter(items, AD_POSITION, placementId, requestId));
                 break;
             }
-            case HEADLINE :{
+            case HEADLINE: {
                 final HeadlineListAdapter adapter = new HeadlineListAdapter(items, AD_POSITION, placementId, requestId);
                 recyclerView.setAdapter(adapter);
 
-                    recyclerView.addOnScrollListener(new HeadlineSnapListener(AD_POSITION) {
-                        @Override
-                        public void removeAdPositionFromList(int adPosition) {
-                            // will be called when snap was occurred
-                            items.remove(adPosition);
-                            adapter.notifyDataSetChanged();
-                        }
-                    });
+                recyclerView.addOnScrollListener(new HeadlineSnapListener(AD_POSITION) {
+                    @Override
+                    public void removeAdPositionFromList(int adPosition) {
+                        // will be called when snap was occurred
+                        items.remove(adPosition);
+                        adapter.notifyDataSetChanged();
+                    }
+                });
 
                 break;
             }
-            case INTERSCROLLER :{
-                recyclerView.setAdapter(new InterscrollerListAdapter(items, AD_POSITION, placementId, requestId));
+            case INTERSCROLLER: {
+                recyclerView.setAdapter(new InterscrollerListAdapter(items, AD_POSITION, placementId, requestId, false));
                 break;
             }
         }

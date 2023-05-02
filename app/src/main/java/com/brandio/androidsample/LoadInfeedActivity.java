@@ -2,11 +2,12 @@ package com.brandio.androidsample;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.brandio.ads.AdProvider;
 import com.brandio.ads.AdRequest;
@@ -39,6 +40,7 @@ public class LoadInfeedActivity extends AppCompatActivity {
 
         placementId = getIntent().getStringExtra(MainActivity.PLACEMENT_ID);
         adUnitType = getIntent().getStringExtra(MainActivity.AD_UNIT_TYPE);
+        boolean isViewPager = getIntent().getStringExtra(MainActivity.NAME).contains("ViewPager");
 
         loadButton = findViewById(R.id.button_load_infeed);
         loadButton.setOnClickListener(new View.OnClickListener() {
@@ -55,7 +57,9 @@ public class LoadInfeedActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 showButton.setEnabled(false);
-                Intent intent = new Intent(LoadInfeedActivity.this, ShowListWithInfeedActivity.class);
+                Intent intent = isViewPager ?
+                        new Intent(LoadInfeedActivity.this, ViewPagerActivity.class) :
+                        new Intent(LoadInfeedActivity.this, ShowListWithInfeedActivity.class);
                 intent.putExtra(MainActivity.PLACEMENT_ID, placementId);
                 intent.putExtra(MainActivity.REQUEST_ID, requestId);
                 intent.putExtra(MainActivity.AD_UNIT_TYPE, adUnitType);
@@ -128,7 +132,7 @@ public class LoadInfeedActivity extends AppCompatActivity {
 
                 try {
                     adProvider.loadAd();
-                } catch(DioSdkException e) {
+                } catch (DioSdkException e) {
                     Log.e(TAG, e.getLocalizedMessage());
                 }
             }

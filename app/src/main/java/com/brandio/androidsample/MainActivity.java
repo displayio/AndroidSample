@@ -2,12 +2,13 @@ package com.brandio.androidsample;
 
 import android.content.Intent;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.brandio.ads.Controller;
 import com.brandio.ads.ads.AdUnitType;
@@ -21,12 +22,13 @@ public class MainActivity extends AppCompatActivity {
     public static final String PLACEMENT_ID = "placementId";
     public static final String REQUEST_ID = "requestId";
     public static final String AD_UNIT_TYPE = "adUnitType";
+    public static final String NAME = "placementName";
     private static String TAG = "MainActivity";
 
     private static final String APP_ID = "6494";
 
     private static final PlacementListItem[] data = {
-            new PlacementListItem("4654", AdUnitType.INTERSTITIAL,  "Interstitial Display"),
+            new PlacementListItem("4654", AdUnitType.INTERSTITIAL, "Interstitial Display"),
             new PlacementListItem("3231", AdUnitType.INTERSTITIAL, "Interstitial Video"),
             new PlacementListItem("4655", AdUnitType.INFEED, "Infeed Video"),
             new PlacementListItem("5369", AdUnitType.INFEED, "Infeed Display"),
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
             new PlacementListItem("6430", AdUnitType.INTERSCROLLER, "Interscroller"),
             new PlacementListItem("6735", AdUnitType.HEADLINE, "Headline Video"),
             new PlacementListItem("6955", AdUnitType.HEADLINE, "Headline Display"),
+            new PlacementListItem("6430", AdUnitType.INTERSCROLLER, "Interscroller (ViewPager)"),
     };
 
     @Override
@@ -54,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
                 @Override
                 public void onInitError(DIOError error) {
                     Toast.makeText(MainActivity.this,
-                            "Error initialize SDK, check your internet connection",
-                            Toast.LENGTH_LONG)
+                                    "Error initialize SDK, check your internet connection",
+                                    Toast.LENGTH_LONG)
                             .show();
                     Log.e(TAG, error.getMessage());
                 }
@@ -80,18 +83,17 @@ public class MainActivity extends AppCompatActivity {
                 switch (data[position].type) {
                     case INFEED:
                     case INTERSCROLLER:
-                    case HEADLINE:
-                        {
+                    case HEADLINE: {
                         Intent intent = new Intent(MainActivity.this, LoadInfeedActivity.class);
                         intent.putExtra(PLACEMENT_ID, data[position].id);
                         intent.putExtra(AD_UNIT_TYPE, data[position].type.name());
+                        intent.putExtra(NAME, data[position].name);
                         startActivity(intent);
                         break;
                     }
 
                     case INTERSTITIAL:
-                    case REWARDEDVIDEO:
-                        {
+                    case REWARDEDVIDEO: {
                         Intent intent = new Intent(MainActivity.this, InterstitialActivity.class);
                         intent.putExtra(PLACEMENT_ID, data[position].id);
                         startActivity(intent);
@@ -99,8 +101,7 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     case BANNER:
-                    case MEDIUMRECTANGLE:
-                        {
+                    case MEDIUMRECTANGLE: {
                         Intent intent = new Intent(MainActivity.this, BannerAndMediumRectangleActivity.class);
                         intent.putExtra(PLACEMENT_ID, data[position].id);
                         intent.putExtra(AD_UNIT_TYPE, data[position].type.name());
@@ -111,7 +112,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onLongClick(View view, int position) {}
+            public void onLongClick(View view, int position) {
+            }
         }));
     }
 }
