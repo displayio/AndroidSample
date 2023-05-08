@@ -1,8 +1,10 @@
 package com.brandio.androidsample;
 
 import android.content.Context;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,14 +47,7 @@ public class InterscrollerListAdapter extends RecyclerView.Adapter<RecyclerView.
         if (viewType == AD_VIEW_TYPE) {
             try {
                 InterscrollerPlacement placement = (InterscrollerPlacement) Controller.getInstance().getPlacement(placementId);
-                if (isViewPager) {
-                    placement.setReveal(false);
-                    placement.setShowHeader(false);
-                } else {
-                    placement.setReveal(true);
-                    placement.setShowHeader(true);
-                    placement.setParentRecyclerView((RecyclerView) parent);
-                }
+                placement.setParentRecyclerView((RecyclerView) parent);
             } catch (DioSdkException e) {
                 e.printStackTrace();
             }
@@ -83,7 +78,7 @@ public class InterscrollerListAdapter extends RecyclerView.Adapter<RecyclerView.
     public void onBindViewHolder(@NonNull final RecyclerView.ViewHolder holder, final int position) {
         if (holder.getItemViewType() == AD_VIEW_TYPE) {
             try {
-                InterscrollerPlacement placement = (InterscrollerPlacement)Controller.getInstance().getPlacement(placementId);
+                InterscrollerPlacement placement = (InterscrollerPlacement) Controller.getInstance().getPlacement(placementId);
                 InterscrollerContainer container = placement.getContainer(context, requestId, position);
 //                container.setInterscrollerHeight(1500);
 //                container.setInterscrollerOffset(250);

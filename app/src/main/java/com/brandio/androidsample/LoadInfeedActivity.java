@@ -8,10 +8,12 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.brandio.ads.AdProvider;
 import com.brandio.ads.AdRequest;
 import com.brandio.ads.Controller;
+import com.brandio.ads.InterscrollerPlacement;
 import com.brandio.ads.Placement;
 import com.brandio.ads.ads.Ad;
 import com.brandio.ads.exceptions.DIOError;
@@ -32,7 +34,7 @@ public class LoadInfeedActivity extends AppCompatActivity {
     private String placementId;
     private String requestId;
     private String adUnitType;
-
+    private boolean isViewPager;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +42,7 @@ public class LoadInfeedActivity extends AppCompatActivity {
 
         placementId = getIntent().getStringExtra(MainActivity.PLACEMENT_ID);
         adUnitType = getIntent().getStringExtra(MainActivity.AD_UNIT_TYPE);
-        boolean isViewPager = getIntent().getStringExtra(MainActivity.NAME).contains("ViewPager");
+        isViewPager = getIntent().getStringExtra(MainActivity.NAME).contains("ViewPager");
 
         loadButton = findViewById(R.id.button_load_infeed);
         loadButton.setOnClickListener(new View.OnClickListener() {
@@ -83,6 +85,14 @@ public class LoadInfeedActivity extends AppCompatActivity {
         } catch (DioSdkException e) {
             Log.e(TAG, e.getLocalizedMessage());
             return;
+        }
+
+        // customise IS here
+        if(isViewPager) {
+            placement.setShowSoundControl(false);  //true by default
+            placement.setDefaultMute(true);  //true by default
+            ((InterscrollerPlacement)placement).setReveal(false);   //true by default
+            ((InterscrollerPlacement)placement).setShowHeader(false);   //true by default
         }
 
         final AdRequest adRequest = placement.newAdRequest();
