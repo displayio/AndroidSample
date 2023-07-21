@@ -18,6 +18,7 @@ import java.util.ArrayList;
 public class ViewPagerActivity extends AppCompatActivity {
     public static final String TAG = "ViewPagerActivity";
     private boolean soundEnabled = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,15 +27,14 @@ public class ViewPagerActivity extends AppCompatActivity {
         String placementId = getIntent().getStringExtra(PLACEMENT_ID);
         String requestId = getIntent().getStringExtra(REQUEST_ID);
 
-        FloatingActionButton customSoundControl = findViewById(R.id.custom_sound);
         ViewPager2 viewPager = findViewById(R.id.view_pager2);
         final ArrayList<Integer> items = new ArrayList<>();
         for (int i = 1; i <= 40; i++) {
             items.add(i);
         }
-        viewPager.setAdapter(new InterscrollerListAdapter(items, 3, placementId, requestId, true));
+        viewPager.setAdapter(new InterscrollerListAdapter(items, 1, placementId, requestId, true));
 
-        customSoundControl = findViewById(R.id.custom_sound);
+        FloatingActionButton customSoundControl = findViewById(R.id.custom_sound);
         customSoundControl.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -44,8 +44,7 @@ public class ViewPagerActivity extends AppCompatActivity {
                             .getAdRequestById(getIntent().getStringExtra(REQUEST_ID))
                             .getAdProvider().getAd().toggleSound(!soundEnabled);
                     soundEnabled = !soundEnabled;
-                }
-                catch (Exception e) {
+                } catch (Exception e) {
                     Log.e(TAG, "Error. Cannot change sound settings");
                     e.printStackTrace();
                 }

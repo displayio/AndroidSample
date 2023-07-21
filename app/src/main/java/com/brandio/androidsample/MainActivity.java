@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
             new PlacementListItem("6735", AdUnitType.HEADLINE, "Headline Video"),
             new PlacementListItem("6955", AdUnitType.HEADLINE, "Headline Display"),
             new PlacementListItem("6430", AdUnitType.INTERSCROLLER, "Interscroller (ViewPager)"),
+            new PlacementListItem("6430", AdUnitType.INTERSCROLLER, "Interscroller ORTB (ViewPager)"),
     };
 
     @Override
