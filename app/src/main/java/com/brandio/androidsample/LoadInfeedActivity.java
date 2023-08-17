@@ -51,10 +51,13 @@ public class LoadInfeedActivity extends AppCompatActivity {
         loadButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (getPlacement() == null) {
+                    return;
+                }
                 if (isORTB) {
-                    loadAdFromORTB();
+                    loadAdFromORTB(getPlacement());
                 } else {
-                    loadAd();
+                    loadAd(getPlacement());
                 }
             }
         });
@@ -83,15 +86,13 @@ public class LoadInfeedActivity extends AppCompatActivity {
         loadButton.setEnabled(true);
     }
 
-    private void loadAd() {
-        loadButton.setEnabled(false);
-
+    private Placement getPlacement() {
         Placement placement;
         try {
             placement = Controller.getInstance().getPlacement(placementId);
         } catch (DioSdkException e) {
             Log.e(TAG, e.getLocalizedMessage());
-            return;
+            return null;
         }
 
         // customise IS here
@@ -100,7 +101,16 @@ public class LoadInfeedActivity extends AppCompatActivity {
             placement.setDefaultMute(true);  //true by default
             ((InterscrollerPlacement) placement).setReveal(false);   //true by default
             ((InterscrollerPlacement) placement).setShowHeader(false);   //true by default
+        } else if (placement instanceof InterscrollerPlacement){
+            placement.setShowSoundControl(true);  //true by default
+            placement.setDefaultMute(true);  //true by default
+            ((InterscrollerPlacement) placement).setReveal(true);   //true by default
+            ((InterscrollerPlacement) placement).setShowHeader(true);   //true by default
         }
+        return placement;
+    }
+    private void loadAd(Placement placement) {
+        loadButton.setEnabled(false);
 
         final AdRequest adRequest = placement.newAdRequest();
         adRequest.setAdRequestListener(new AdRequestListener() {
@@ -163,26 +173,12 @@ public class LoadInfeedActivity extends AppCompatActivity {
         adRequest.requestAd();
     }
 
-    private void loadAdFromORTB() {
+    private void loadAdFromORTB(Placement placement) {
         loadButton.setEnabled(false);
 
-        InterscrollerPlacement placement;
-        try {
-            placement = (InterscrollerPlacement) Controller.getInstance().getPlacement(placementId);
-        } catch (Exception e) {
-            Log.e(TAG, e.getLocalizedMessage());
-            return;
-        }
+        InterscrollerPlacement interscrollerPlacement = (InterscrollerPlacement) placement;
 
-        // customise IS here
-        if (isViewPager) {
-            placement.setShowSoundControl(false);  //true by default
-            placement.setDefaultMute(true);  //true by default
-            placement.setReveal(false);   //true by default
-            placement.setShowHeader(false);   //true by default
-        }
-
-        placement.loadInterscrollerFromORTB(getSampleOrtbResponse(), new Placement.OnORTBLoadListener() {
+        interscrollerPlacement.loadInterscrollerFromORTB(getSampleOrtbResponse(), new Placement.OnORTBLoadListener() {
             @Override
             public void onLoaded(Ad ad) {
                 requestId = ad.getRequestId();

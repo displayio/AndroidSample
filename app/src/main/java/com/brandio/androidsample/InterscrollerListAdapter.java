@@ -45,12 +45,6 @@ public class InterscrollerListAdapter extends RecyclerView.Adapter<RecyclerView.
 
         context = parent.getContext().getApplicationContext();
         if (viewType == AD_VIEW_TYPE) {
-            try {
-                InterscrollerPlacement placement = (InterscrollerPlacement) Controller.getInstance().getPlacement(placementId);
-                placement.setParentRecyclerView((RecyclerView) parent);
-            } catch (DioSdkException e) {
-                e.printStackTrace();
-            }
             ViewGroup adView = InterscrollerContainer.getAdView(context);
             if (isViewPager) {  // need because ViewPager require match_parent sizes
                 adView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
