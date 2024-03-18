@@ -10,9 +10,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.brandio.ads.Controller;
-import com.brandio.ads.InterscrollerPlacement;
 import com.brandio.ads.containers.InterscrollerContainer;
 import com.brandio.ads.exceptions.DioSdkException;
+import com.brandio.ads.placements.InterscrollerPlacement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +73,7 @@ public class InterscrollerListAdapter extends RecyclerView.Adapter<RecyclerView.
         if (holder.getItemViewType() == AD_VIEW_TYPE) {
             try {
                 InterscrollerPlacement placement = (InterscrollerPlacement) Controller.getInstance().getPlacement(placementId);
-                InterscrollerContainer container = placement.getContainer(context, requestId, position);
+                InterscrollerContainer container = placement.getContainer(context, requestId);
 //                container.setInterscrollerHeight(1500);
 //                container.setInterscrollerOffset(250);
                 container.bindTo((ViewGroup) holder.itemView);

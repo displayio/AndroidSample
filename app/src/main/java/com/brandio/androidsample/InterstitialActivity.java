@@ -7,16 +7,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.brandio.ads.AdProvider;
-import com.brandio.ads.AdRequest;
+
 import com.brandio.ads.Controller;
-import com.brandio.ads.Placement;
 import com.brandio.ads.ads.Ad;
 import com.brandio.ads.exceptions.DIOError;
 import com.brandio.ads.exceptions.DioSdkException;
 import com.brandio.ads.listeners.AdEventListener;
-import com.brandio.ads.listeners.AdLoadListener;
 import com.brandio.ads.listeners.AdRequestListener;
+import com.brandio.ads.placements.Placement;
+import com.brandio.ads.request.AdRequest;
 
 
 public class InterstitialActivity extends AppCompatActivity {
@@ -66,35 +65,24 @@ public class InterstitialActivity extends AppCompatActivity {
 
         AdRequest adRequest = placement.newAdRequest();
         adRequest.setAdRequestListener(new AdRequestListener() {
+
             @Override
-            public void onAdReceived(AdProvider adProvider) {
-
-                adProvider.setAdLoadListener(new AdLoadListener() {
-                    @Override
-                    public void onLoaded(Ad ad) {
-                        loadedAd = ad;
-                        showButton.setEnabled(true);
-                    }
-
-                    @Override
-                    public void onFailedToLoad(DIOError error) {
-                        Toast.makeText(InterstitialActivity.this, "Ad for placement " + placementId + " failed to load", Toast.LENGTH_LONG).show();
-                    }
-                });
-
-                try {
-                    adProvider.loadAd();
-                } catch(DioSdkException e) {
-                    Log.e(TAG, e.getLocalizedMessage());
-                }
+            public void onAdReceived(Ad ad) {
+                loadedAd = ad;
+                showButton.setEnabled(true);
             }
 
             @Override
             public void onNoAds(DIOError error) {
                 Toast.makeText(InterstitialActivity.this, "No Ads placement " + placementId, Toast.LENGTH_LONG).show();
             }
-        });
 
+            @Override
+            public void onFailedToLoad(DIOError dioError) {
+                Toast.makeText(InterstitialActivity.this, "Ad for placement " + placementId + " failed to load", Toast.LENGTH_LONG).show();
+
+            }
+        });
         adRequest.requestAd();
     }
 

@@ -10,17 +10,17 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.brandio.ads.AdProvider;
-import com.brandio.ads.AdRequest;
+
 import com.brandio.ads.Controller;
-import com.brandio.ads.InterscrollerPlacement;
-import com.brandio.ads.Placement;
+
 import com.brandio.ads.ads.Ad;
+import com.brandio.ads.request.AdRequest;
 import com.brandio.ads.exceptions.DIOError;
 import com.brandio.ads.exceptions.DioSdkException;
 import com.brandio.ads.listeners.AdEventListener;
-import com.brandio.ads.listeners.AdLoadListener;
 import com.brandio.ads.listeners.AdRequestListener;
+import com.brandio.ads.placements.InterscrollerPlacement;
+import com.brandio.ads.placements.Placement;
 
 
 public class LoadInfeedActivity extends AppCompatActivity {
@@ -98,12 +98,10 @@ public class LoadInfeedActivity extends AppCompatActivity {
         // customise IS here
         if (isViewPager) {
             placement.setShowSoundControl(false);  //true by default
-            placement.setDefaultMute(true);  //true by default
             ((InterscrollerPlacement) placement).setReveal(false);   //true by default
             ((InterscrollerPlacement) placement).setShowHeader(false);   //true by default
         } else if (placement instanceof InterscrollerPlacement){
             placement.setShowSoundControl(true);  //true by default
-            placement.setDefaultMute(true);  //true by default
             ((InterscrollerPlacement) placement).setReveal(true);   //true by default
             ((InterscrollerPlacement) placement).setShowHeader(true);   //true by default
         }
@@ -115,58 +113,47 @@ public class LoadInfeedActivity extends AppCompatActivity {
         final AdRequest adRequest = placement.newAdRequest();
         adRequest.setAdRequestListener(new AdRequestListener() {
             @Override
-            public void onAdReceived(AdProvider adProvider) {
+            public void onAdReceived(Ad ad) {
+                requestId = adRequest.getId();
+                showButton.setEnabled(true);
 
-                adProvider.setAdLoadListener(new AdLoadListener() {
+                ad.setEventListener(new AdEventListener() {
                     @Override
-                    public void onLoaded(Ad ad) {
-                        requestId = adRequest.getId();
-                        showButton.setEnabled(true);
-
-                        ad.setEventListener(new AdEventListener() {
-                            @Override
-                            public void onShown(Ad ad) {
-                                Log.e(TAG, "onShown");
-                            }
-
-                            @Override
-                            public void onFailedToShow(Ad ad) {
-                                Log.e(TAG, "onFailedToShow");
-                            }
-
-                            @Override
-                            public void onClicked(Ad ad) {
-                                Log.e(TAG, "onClicked");
-                            }
-
-                            @Override
-                            public void onClosed(Ad ad) {
-                                Log.e(TAG, "onClosed");
-                            }
-
-                            @Override
-                            public void onAdCompleted(Ad ad) {
-                                Log.e(TAG, "onAdCompleted");
-                            }
-                        });
+                    public void onShown(Ad ad) {
+                        Log.e(TAG, "onShown");
                     }
 
                     @Override
-                    public void onFailedToLoad(DIOError error) {
-                        Toast.makeText(LoadInfeedActivity.this, "Ad for placement " + placementId + " failed to load", Toast.LENGTH_LONG).show();
+                    public void onFailedToShow(Ad ad) {
+                        Log.e(TAG, "onFailedToShow");
+                    }
+
+                    @Override
+                    public void onClicked(Ad ad) {
+                        Log.e(TAG, "onClicked");
+                    }
+
+                    @Override
+                    public void onClosed(Ad ad) {
+                        Log.e(TAG, "onClosed");
+                    }
+
+                    @Override
+                    public void onAdCompleted(Ad ad) {
+                        Log.e(TAG, "onAdCompleted");
                     }
                 });
-
-                try {
-                    adProvider.loadAd();
-                } catch (DioSdkException e) {
-                    Log.e(TAG, e.getLocalizedMessage());
-                }
             }
 
             @Override
             public void onNoAds(DIOError error) {
                 Toast.makeText(LoadInfeedActivity.this, "No Ads placement " + placementId, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onFailedToLoad(DIOError dioError) {
+                Toast.makeText(LoadInfeedActivity.this, "Ad for placement " + placementId + " failed to load", Toast.LENGTH_LONG).show();
+
             }
         });
 

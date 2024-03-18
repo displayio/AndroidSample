@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.brandio.ads.Controller;
-import com.brandio.ads.InfeedPlacement;
-import com.brandio.ads.containers.InfeedAdContainer;
+
+import com.brandio.ads.containers.InfeedContainer;
+import com.brandio.ads.containers.InlineContainer;
 import com.brandio.ads.exceptions.DioSdkException;
+import com.brandio.ads.placements.InfeedPlacement;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +47,7 @@ public class InfeedListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         context = parent.getContext().getApplicationContext();
         switch (viewType) {
             case TYPE_AD:
-                return new AdViewHolder(InfeedAdContainer.getAdView(context));
+                return new AdViewHolder(InlineContainer.getAdView(context));
             default:
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.infeed_list_item, parent, false);
                 return  new ItemViewHolder(view);
@@ -68,7 +70,7 @@ public class InfeedListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                 InfeedPlacement infeedPlacement = (InfeedPlacement) Controller.getInstance().getPlacement(placementId);
                 infeedPlacement.setFullWidth(true);
                 infeedPlacement.setFrameless(true);
-                InfeedAdContainer infeedContainer = infeedPlacement.getInfeedContainer(context, requestId);
+                InfeedContainer infeedContainer = infeedPlacement.getContainer(context, requestId);
                 infeedContainer.bindTo((RelativeLayout) holder.itemView);
             } catch (DioSdkException e) {
                 Log.e(TAG, e.getLocalizedMessage());

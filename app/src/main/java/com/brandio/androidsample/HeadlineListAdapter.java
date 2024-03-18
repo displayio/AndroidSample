@@ -10,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.brandio.ads.Controller;
-import com.brandio.ads.HeadlinePlacement;
-import com.brandio.ads.containers.HeadlineAdContainer;
+
+import com.brandio.ads.containers.HeadlineContainer;
+import com.brandio.ads.containers.InlineContainer;
 import com.brandio.ads.exceptions.DioSdkException;
+import com.brandio.ads.placements.HeadlinePlacement;
 
 import java.util.List;
 
@@ -41,7 +43,7 @@ public class HeadlineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
         context = parent.getContext().getApplicationContext();
         switch (viewType) {
             case TYPE_AD:
-                return new HeadlineListAdapter.AdViewHolder(HeadlineAdContainer.getAdView(context));
+                return new HeadlineListAdapter.AdViewHolder(InlineContainer.getAdView(context));
             default:
                 View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.infeed_list_item, parent, false);
                 return  new HeadlineListAdapter.ItemViewHolder(view);
@@ -65,7 +67,7 @@ public class HeadlineListAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
 //                headlinePlacement.setTextColor(Color.RED);
 //                headlinePlacement.setExpandedBackgroundColor(Color.BLACK);
 //                headlinePlacement.setCollapsedBackgroundColor(Color.BLUE);
-                HeadlineAdContainer container = headlinePlacement.getHeadLineContainer(context, requestId);
+                HeadlineContainer container = headlinePlacement.getContainer(context, requestId);
                 container.bindTo((ViewGroup) holder.itemView);
             } catch (DioSdkException e) {
                 Log.e(TAG, e.getLocalizedMessage());

@@ -1,25 +1,28 @@
 package com.brandio.androidsample;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
-import com.brandio.ads.AdProvider;
-import com.brandio.ads.AdRequest;
-import com.brandio.ads.BannerPlacement;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.brandio.ads.Controller;
-import com.brandio.ads.MediumRectanglePlacement;
-import com.brandio.ads.Placement;
 import com.brandio.ads.ads.Ad;
+import com.brandio.ads.containers.BannerContainer;
+import com.brandio.ads.containers.InlineContainer;
+import com.brandio.ads.containers.MediumRectangleContainer;
 import com.brandio.ads.exceptions.DIOError;
 import com.brandio.ads.exceptions.DioSdkException;
 import com.brandio.ads.listeners.AdEventListener;
-import com.brandio.ads.listeners.AdLoadListener;
 import com.brandio.ads.listeners.AdRequestListener;
+import com.brandio.ads.placements.BannerPlacement;
+import com.brandio.ads.placements.MediumRectanglePlacement;
+import com.brandio.ads.placements.Placement;
+import com.brandio.ads.request.AdRequest;
 
 import java.util.ArrayDeque;
 
@@ -47,7 +50,7 @@ public class BannerAndMediumRectangleActivity extends AppCompatActivity {
 
 
     private View getBannerView(String placementId, String requestId) {
-        View bannerView = null;
+        ViewGroup bannerView = null;
         BannerPlacement bannerPlacement = null;
         try {
             bannerPlacement = ((BannerPlacement) Controller.getInstance().getPlacement(placementId));
@@ -55,13 +58,15 @@ public class BannerAndMediumRectangleActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         if (bannerPlacement != null) {
-            bannerView = bannerPlacement.getBanner(getApplicationContext(), requestId);
+            BannerContainer container = bannerPlacement.getContainer(this, requestId);
+            bannerView = InlineContainer.getAdView(this);
+            container.bindTo(bannerView);
         }
         return bannerView;
     }
 
     private View getMrectView(String placementId, String requestId) {
-        View mrectView = null;
+        ViewGroup mrectView = null;
         MediumRectanglePlacement mediumRectanglePlacement = null;
         try {
             mediumRectanglePlacement = ((MediumRectanglePlacement) Controller.getInstance().getPlacement(placementId));
@@ -69,7 +74,9 @@ public class BannerAndMediumRectangleActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         if (mediumRectanglePlacement != null) {
-            mrectView = mediumRectanglePlacement.getMediumRectangle(getApplicationContext(), requestId);
+            MediumRectangleContainer container = mediumRectanglePlacement.getContainer(this, requestId);
+            mrectView = InlineContainer.getAdView(this);
+            container.bindTo(mrectView);
         }
         return mrectView;
     }
@@ -93,68 +100,90 @@ public class BannerAndMediumRectangleActivity extends AppCompatActivity {
 
                 final AdRequest adRequest = placement.newAdRequest();
                 adRequest.setAdRequestListener(new AdRequestListener() {
+
                     @Override
-                    public void onAdReceived(AdProvider adProvider) {
-                        adProvider.setAdLoadListener(new AdLoadListener() {
+                    public void onAdReceived(Ad ad) {
+                        ad.setEventListener(new AdEventListener() {
                             @Override
-                            public void onLoaded(Ad ad) {
-                                ad.setEventListener(new AdEventListener() {
-                                    @Override
-                                    public void onShown(Ad Ad) {
-                                        Log.e(TAG, "onShown");
-                                    }
-
-                                    @Override
-                                    public void onFailedToShow(Ad ad) {
-
-                                    }
-
-                                    @Override
-                                    public void onClicked(Ad ad) {
-                                        Log.e(TAG, "onClicked");
-                                    }
-
-                                    @Override
-                                    public void onClosed(Ad ad) {
-                                    }
-
-                                    @Override
-                                    public void onAdCompleted(Ad ad) {
-                                    }
-                                });
-
-                                if (placementType.equals("BANNER")) {
-                                    receivedAds.addLast(getBannerView(placementId, adRequest.getId()));
-                                } else {
-                                    receivedAds.addLast(getMrectView(placementId, adRequest.getId()));
-                                }
-                                Log.e(TAG, "adView added to queue, ads in queue = " + receivedAds.size());
-                                Toast.makeText(BannerAndMediumRectangleActivity.this,
-                                        "adView added to queue, ads in queue = " + receivedAds.size(),
-                                        Toast.LENGTH_SHORT).show();
+                            public void onShown(Ad Ad) {
+                                Log.e(TAG, "onShown");
                             }
 
                             @Override
-                            public void onFailedToLoad(DIOError error) {
-                                Toast.makeText(BannerAndMediumRectangleActivity.this,
-                                        "Failed to load ad ",
-                                        Toast.LENGTH_SHORT).show();
+                            public void onFailedToShow(Ad ad) {
+
+                            }
+
+                            @Override
+                            public void onClicked(Ad ad) {
+                                Log.e(TAG, "onClicked");
+                            }
+
+                            @Override
+                            public void onClosed(Ad ad) {
+                            }
+
+                            @Override
+                            public void onAdCompleted(Ad ad) {
                             }
                         });
-                        try {
-                            adProvider.loadAd();
-                        } catch (DioSdkException e) {
-                            e.printStackTrace();
-                            Toast.makeText(BannerAndMediumRectangleActivity.this,
-                                    "DioSdkException: " + e.getMessage(),
-                                    Toast.LENGTH_SHORT).show();
+
+                        if (placementType.equals("BANNER")) {
+                            receivedAds.addLast(getBannerView(placementId, adRequest.getId()));
+                        } else {
+                            receivedAds.addLast(getMrectView(placementId, adRequest.getId()));
                         }
+                        Log.e(TAG, "adView added to queue, ads in queue = " + receivedAds.size());
+                        Toast.makeText(BannerAndMediumRectangleActivity.this,
+                                "adView added to queue, ads in queue = " + receivedAds.size(),
+                                Toast.LENGTH_SHORT).show();
+                        ad.setEventListener(new AdEventListener() {
+                            @Override
+                            public void onShown(Ad Ad) {
+                                Log.e(TAG, "onShown");
+                            }
+
+                            @Override
+                            public void onFailedToShow(Ad ad) {
+
+                            }
+
+                            @Override
+                            public void onClicked(Ad ad) {
+                                Log.e(TAG, "onClicked");
+                            }
+
+                            @Override
+                            public void onClosed(Ad ad) {
+                            }
+
+                            @Override
+                            public void onAdCompleted(Ad ad) {
+                            }
+                        });
+
+                        if (placementType.equals("BANNER")) {
+                            receivedAds.addLast(getBannerView(placementId, adRequest.getId()));
+                        } else {
+                            receivedAds.addLast(getMrectView(placementId, adRequest.getId()));
+                        }
+                        Log.e(TAG, "adView added to queue, ads in queue = " + receivedAds.size());
+                        Toast.makeText(BannerAndMediumRectangleActivity.this,
+                                "adView added to queue, ads in queue = " + receivedAds.size(),
+                                Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onNoAds(DIOError error) {
                         Toast.makeText(BannerAndMediumRectangleActivity.this,
                                 "No ads",
+                                Toast.LENGTH_SHORT).show();
+                    }
+
+                    @Override
+                    public void onFailedToLoad(DIOError dioError) {
+                        Toast.makeText(BannerAndMediumRectangleActivity.this,
+                                "Failed to load ad ",
                                 Toast.LENGTH_SHORT).show();
                     }
                 });

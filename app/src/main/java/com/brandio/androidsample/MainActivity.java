@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
         Controller ctrl = Controller.getInstance();
         if (!ctrl.isInitialized()) {
-            ctrl.init(this, null, APP_ID, new SdkInitListener() {
+            ctrl.init(this, APP_ID, new SdkInitListener() {
                 @Override
                 public void onInit() {
                     Log.i(TAG, "Controller initialized");

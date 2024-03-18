@@ -42,7 +42,7 @@ public class ViewPagerActivity extends AppCompatActivity {
                     Controller.getInstance()
                             .getPlacement(getIntent().getStringExtra(PLACEMENT_ID))
                             .getAdRequestById(getIntent().getStringExtra(REQUEST_ID))
-                            .getAdProvider().getAd().toggleSound(!soundEnabled);
+                            .getAd().toggleSound(!soundEnabled);
                     soundEnabled = !soundEnabled;
                 } catch (Exception e) {
                     Log.e(TAG, "Error. Cannot change sound settings");
