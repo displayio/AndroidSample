@@ -23,6 +23,7 @@ import com.brandio.ads.placements.BannerPlacement;
 import com.brandio.ads.placements.MediumRectanglePlacement;
 import com.brandio.ads.placements.Placement;
 import com.brandio.ads.request.AdRequest;
+import com.brandio.androidsample.utils.DIOAdrequestHelper;
 
 import java.util.ArrayDeque;
 
@@ -81,7 +82,6 @@ public class BannerAndMediumRectangleActivity extends AppCompatActivity {
         return mrectView;
     }
 
-
     private void setupButtons(final String placementId, final String placementType) {
 
         loadNewAd.setOnClickListener(new View.OnClickListener() {
@@ -98,45 +98,12 @@ public class BannerAndMediumRectangleActivity extends AppCompatActivity {
                     return;
                 }
 
-                final AdRequest adRequest = placement.newAdRequest();
+//                final AdRequest adRequest = placement.newAdRequest(); // use default ad request
+                final AdRequest adRequest = DIOAdrequestHelper.createAndPopulateAdRequest(placement); // use customised ad request
                 adRequest.setAdRequestListener(new AdRequestListener() {
 
                     @Override
                     public void onAdReceived(Ad ad) {
-                        ad.setEventListener(new AdEventListener() {
-                            @Override
-                            public void onShown(Ad Ad) {
-                                Log.e(TAG, "onShown");
-                            }
-
-                            @Override
-                            public void onFailedToShow(Ad ad) {
-
-                            }
-
-                            @Override
-                            public void onClicked(Ad ad) {
-                                Log.e(TAG, "onClicked");
-                            }
-
-                            @Override
-                            public void onClosed(Ad ad) {
-                            }
-
-                            @Override
-                            public void onAdCompleted(Ad ad) {
-                            }
-                        });
-
-                        if (placementType.equals("BANNER")) {
-                            receivedAds.addLast(getBannerView(placementId, adRequest.getId()));
-                        } else {
-                            receivedAds.addLast(getMrectView(placementId, adRequest.getId()));
-                        }
-                        Log.e(TAG, "adView added to queue, ads in queue = " + receivedAds.size());
-                        Toast.makeText(BannerAndMediumRectangleActivity.this,
-                                "adView added to queue, ads in queue = " + receivedAds.size(),
-                                Toast.LENGTH_SHORT).show();
                         ad.setEventListener(new AdEventListener() {
                             @Override
                             public void onShown(Ad Ad) {

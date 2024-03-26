@@ -16,6 +16,7 @@ import com.brandio.ads.listeners.AdEventListener;
 import com.brandio.ads.listeners.AdRequestListener;
 import com.brandio.ads.placements.Placement;
 import com.brandio.ads.request.AdRequest;
+import com.brandio.androidsample.utils.DIOAdrequestHelper;
 
 
 public class InterstitialActivity extends AppCompatActivity {
@@ -63,7 +64,8 @@ public class InterstitialActivity extends AppCompatActivity {
             return;
         }
 
-        AdRequest adRequest = placement.newAdRequest();
+//                final AdRequest adRequest = placement.newAdRequest(); // use default ad request
+        final AdRequest adRequest = DIOAdrequestHelper.createAndPopulateAdRequest(placement); // use customised ad request
         adRequest.setAdRequestListener(new AdRequestListener() {
 
             @Override

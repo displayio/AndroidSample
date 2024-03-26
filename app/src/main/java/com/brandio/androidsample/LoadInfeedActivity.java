@@ -21,6 +21,7 @@ import com.brandio.ads.listeners.AdEventListener;
 import com.brandio.ads.listeners.AdRequestListener;
 import com.brandio.ads.placements.InterscrollerPlacement;
 import com.brandio.ads.placements.Placement;
+import com.brandio.androidsample.utils.DIOAdrequestHelper;
 
 
 public class LoadInfeedActivity extends AppCompatActivity {
@@ -110,7 +111,8 @@ public class LoadInfeedActivity extends AppCompatActivity {
     private void loadAd(Placement placement) {
         loadButton.setEnabled(false);
 
-        final AdRequest adRequest = placement.newAdRequest();
+//                final AdRequest adRequest = placement.newAdRequest(); // use default ad request
+        final AdRequest adRequest = DIOAdrequestHelper.createAndPopulateAdRequest(placement); // use customised ad request
         adRequest.setAdRequestListener(new AdRequestListener() {
             @Override
             public void onAdReceived(Ad ad) {

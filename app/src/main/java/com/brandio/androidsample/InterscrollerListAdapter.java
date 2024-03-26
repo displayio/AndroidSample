@@ -1,17 +1,15 @@
 package com.brandio.androidsample;
 
 import android.content.Context;
-
-import androidx.annotation.NonNull;
-import androidx.recyclerview.widget.RecyclerView;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.brandio.ads.Controller;
 import com.brandio.ads.containers.InterscrollerContainer;
-import com.brandio.ads.exceptions.DioSdkException;
 import com.brandio.ads.placements.InterscrollerPlacement;
 
 import java.util.ArrayList;
