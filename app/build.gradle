@@ -35,6 +35,6 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     implementation "androidx.multidex:multidex:2.0.1"
 
-//    implementation 'com.brandio.ads:sdk:5.0.1'
-    implementation 'beta.brandio.ads:sdk:5.0.2'
+    implementation 'com.brandio.adsc'
+//    implementation 'beta.brandio.ads:sdk:5.0.2'
 }
