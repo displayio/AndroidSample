@@ -95,11 +95,13 @@ public class InterstitialActivity extends AppCompatActivity {
             @Override
             public void onShown(Ad ad) {
                 Log.e(TAG, "onShown");
+                loadButton.setEnabled(true);
             }
 
             @Override
             public void onFailedToShow(Ad ad) {
                 Log.e(TAG, "onFailedToShow");
+                loadButton.setEnabled(true);
             }
 
             @Override

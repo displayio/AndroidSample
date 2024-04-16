@@ -45,13 +45,11 @@ public class InfeedListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         context = parent.getContext().getApplicationContext();
-        switch (viewType) {
-            case TYPE_AD:
-                return new AdViewHolder(InlineContainer.getAdView(context));
-            default:
-                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.infeed_list_item, parent, false);
-                return  new ItemViewHolder(view);
+        if (viewType == TYPE_AD) {
+            return new AdViewHolder(InlineContainer.getAdView(context));
         }
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.infeed_list_item, parent, false);
+        return new ItemViewHolder(view);
     }
 
     @Override
@@ -68,8 +66,8 @@ public class InfeedListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         if (holder.getItemViewType() == TYPE_AD && holder instanceof AdViewHolder) {
             try {
                 InfeedPlacement infeedPlacement = (InfeedPlacement) Controller.getInstance().getPlacement(placementId);
-                infeedPlacement.setFullWidth(true);
-                infeedPlacement.setFrameless(true);
+//                infeedPlacement.setFullWidth(true);
+//                infeedPlacement.setFrameless(true);
                 InfeedContainer infeedContainer = infeedPlacement.getContainer(context, requestId);
                 infeedContainer.bindTo((RelativeLayout) holder.itemView);
             } catch (DioSdkException e) {
