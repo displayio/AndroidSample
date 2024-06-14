@@ -48,7 +48,6 @@ public class DIOAdrequestHelper {
                 .setStoreUrl("http://g.play.com/id111555999")
                 .setDomain("www.awesome.app.com")
                 .setPublisherCats(new ArrayList<>(Arrays.asList("IAB0001", "IAB99-99")))
-                .setCur("BTC")
                 .setBuyerUId("id_12-45:55432")
                 .setYob(2001)
                 .setGender(Gender.O)
