@@ -1,9 +1,9 @@
 package com.brandio.androidsample.utils;
 
-import com.brandio.ads.consent.CompliantState;
 import com.brandio.ads.placements.Placement;
 import com.brandio.ads.request.AdRequest;
 import com.brandio.ads.request.AppContentData;
+import com.brandio.ads.request.CompliantState;
 import com.brandio.ads.request.Gender;
 import com.brandio.ads.request.MediationPlatform;
 
