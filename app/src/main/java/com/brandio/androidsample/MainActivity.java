@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
             new PlacementListItem("6428", AdUnitType.BANNER, "Banner"),
             new PlacementListItem("6429", AdUnitType.MEDIUMRECTANGLE, "Medium Rectangle"),
             new PlacementListItem("6430", AdUnitType.INTERSCROLLER, "Interscroller"),
-            new PlacementListItem("6735", AdUnitType.HEADLINE, "Headline Video"),
-            new PlacementListItem("6955", AdUnitType.HEADLINE, "Headline Display"),
             new PlacementListItem("6430", AdUnitType.INTERSCROLLER, "Interscroller (ViewPager)"),
             new PlacementListItem("6430", AdUnitType.INTERSCROLLER, "Interscroller ORTB (ViewPager)"),
     };
@@ -83,8 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (data[position].type) {
                     case INFEED:
-                    case INTERSCROLLER:
-                    case HEADLINE: {
+                    case INTERSCROLLER: {
                         Intent intent = new Intent(MainActivity.this, LoadInfeedActivity.class);
                         intent.putExtra(PLACEMENT_ID, data[position].id);
                         intent.putExtra(AD_UNIT_TYPE, data[position].type.name());
