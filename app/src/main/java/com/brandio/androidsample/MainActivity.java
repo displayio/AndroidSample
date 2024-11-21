@@ -22,10 +22,9 @@ import java.util.Objects;
 
 
 public class MainActivity extends AppCompatActivity {
-    private final   String TAG = this.getClass().getSimpleName();
+    private final String TAG = this.getClass().getSimpleName();
 
     public static final String PLACEMENT_ID = "placementId";
-    public static final String REQUEST_ID = "requestId";
     public static final String NAME = "placementName";
 
     //app id required to initialize SDK
@@ -42,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
             new PlacementListItem("6430", AdUnitType.INTERSCROLLER, "Interscroller Display"),
             new PlacementListItem("6430", AdUnitType.INTERSCROLLER, "Interscroller (ViewPager)"),
             new PlacementListItem("6430", AdUnitType.INTERSCROLLER, "Interscroller ORTB (ViewPager)"),
+            new PlacementListItem("4655", AdUnitType.INFEED, "Infeed Video (Compose)"),
+            new PlacementListItem("6430", AdUnitType.INTERSCROLLER, "Interscroller Display (Compose)"),
     };
 
     @Override
@@ -51,35 +52,32 @@ public class MainActivity extends AppCompatActivity {
 
         Controller ctrl = Controller.getInstance();
         //call init method with your app id at the beginning of your app
-            ctrl.init(this, APP_ID, new SdkInitListener() {
-                @Override
-                public void onInit() {
-                    Toast.makeText(MainActivity.this,
-                                    "DIO SDK initialized",
-                                    Toast.LENGTH_LONG)
-                            .show();
-                    postInit();
-                }
+        ctrl.init(this, APP_ID, new SdkInitListener() {
+            @Override
+            public void onInit() {
+                Toast.makeText(MainActivity.this,
+                                "DIO SDK initialized",
+                                Toast.LENGTH_LONG)
+                        .show();
+                postInit();
+            }
 
-                @Override
-                public void onInitError(DIOError error) {
-                    Toast.makeText(MainActivity.this,
-                                    "Error initialize SDK, check your internet connection",
-                                    Toast.LENGTH_LONG)
-                            .show();
-                    Log.e(TAG, Objects.requireNonNull(error.getMessage()));
-                }
-            });
+            @Override
+            public void onInitError(DIOError error) {
+                Toast.makeText(MainActivity.this,
+                                "Error initialize SDK, check your internet connection",
+                                Toast.LENGTH_LONG)
+                        .show();
+                Log.e(TAG, Objects.requireNonNull(error.getMessage()));
+            }
+        });
 
     }
 
     private void postInit() {
         RecyclerView recyclerView = findViewById(R.id.recycler_view_main);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
-        PlacementListAdapter adapter = new PlacementListAdapter(data);
-        recyclerView.setAdapter(adapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new PlacementListAdapter(data));
 
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(this, recyclerView, new RecyclerTouchListener.ClickListener() {
             @Override
@@ -88,11 +86,17 @@ public class MainActivity extends AppCompatActivity {
                 switch (data[position].type) {
                     case INFEED:
                     case INTERSCROLLER: {
-                        Class clazz = data[position].name.contains("ViewPager")
-                                ? ViewPagerActivity.class : FeedActivity.class;
+                        String name = data[position].name;
+                        Class clazz;
+                        if (name.contains("Compose")) {
+                            clazz = ComposeFeedActivity.class;
+                        } else {
+                            clazz = name.contains("ViewPager") ? ViewPagerActivity.class : FeedActivity.class;
+                        }
+
                         Intent intent = new Intent(MainActivity.this, clazz);
                         intent.putExtra(PLACEMENT_ID, data[position].id);
-                        intent.putExtra(NAME, data[position].name);
+                        intent.putExtra(NAME, name);
                         startActivity(intent);
                         break;
                     }
