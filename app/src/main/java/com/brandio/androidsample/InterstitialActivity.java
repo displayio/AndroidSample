@@ -1,12 +1,12 @@
 package com.brandio.androidsample;
 
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.brandio.ads.Controller;
 import com.brandio.ads.ads.Ad;
@@ -16,16 +16,14 @@ import com.brandio.ads.listeners.AdEventListener;
 import com.brandio.ads.listeners.AdRequestListener;
 import com.brandio.ads.placements.Placement;
 import com.brandio.ads.request.AdRequest;
-import com.brandio.androidsample.utils.DIOAdrequestHelper;
+import com.brandio.androidsample.tools.DIOAdRequestHelper;
 
 
 public class InterstitialActivity extends AppCompatActivity {
-
-    private static String TAG = "InterstitialActivity";
+    private static final String TAG = "InterstitialActivity";
 
     private Button loadButton;
     private Button showButton;
-
     private String placementId;
     private Ad loadedAd;
 
@@ -34,7 +32,7 @@ public class InterstitialActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interstitial);
 
-        placementId = getIntent().getStringExtra("placementId");
+        placementId = getIntent().getStringExtra(MainActivity.PLACEMENT_ID);
 
         loadButton = findViewById(R.id.button_load_interstitial);
         loadButton.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +52,10 @@ public class InterstitialActivity extends AppCompatActivity {
     }
 
     private void loadAd() {
+        if (loadedAd != null) {
+            loadedAd.close();
+            loadedAd = null;
+        }
         loadButton.setEnabled(false);
 
         Placement placement;
@@ -65,7 +67,7 @@ public class InterstitialActivity extends AppCompatActivity {
         }
 
 //                final AdRequest adRequest = placement.newAdRequest(); // use default ad request
-        final AdRequest adRequest = DIOAdrequestHelper.createAndPopulateAdRequest(placement); // use customised ad request
+        final AdRequest adRequest = DIOAdRequestHelper.createAndPopulateAdRequest(placement); // use customised ad request
         adRequest.setAdRequestListener(new AdRequestListener() {
 
             @Override
@@ -121,5 +123,13 @@ public class InterstitialActivity extends AppCompatActivity {
         });
 
         loadedAd.showAd(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (loadedAd != null) {
+            loadedAd.close();
+        }
     }
 }

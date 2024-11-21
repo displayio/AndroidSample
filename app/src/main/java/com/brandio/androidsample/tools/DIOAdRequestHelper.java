@@ -1,4 +1,4 @@
-package com.brandio.androidsample.utils;
+package com.brandio.androidsample.tools;
 
 import com.brandio.ads.placements.Placement;
 import com.brandio.ads.request.AdRequest;
@@ -12,8 +12,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-public class DIOAdrequestHelper {
+public class DIOAdRequestHelper {
 
+    //demonstrates how to create and populate AdRequest
     public static AdRequest createAndPopulateAdRequest(Placement placement) {
         AppContentData.ContentProducer contentProducer = new AppContentData.ContentProducer();
         contentProducer.setId("producer_666");

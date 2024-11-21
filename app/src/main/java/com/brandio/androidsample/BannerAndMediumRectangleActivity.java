@@ -8,22 +8,24 @@ import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Toast;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.brandio.ads.Controller;
 import com.brandio.ads.ads.Ad;
+import com.brandio.ads.ads.AdUnitType;
 import com.brandio.ads.containers.BannerContainer;
 import com.brandio.ads.containers.InlineContainer;
 import com.brandio.ads.containers.MediumRectangleContainer;
 import com.brandio.ads.exceptions.DIOError;
-import com.brandio.ads.exceptions.DioSdkException;
 import com.brandio.ads.listeners.AdEventListener;
 import com.brandio.ads.listeners.AdRequestListener;
 import com.brandio.ads.placements.BannerPlacement;
 import com.brandio.ads.placements.MediumRectanglePlacement;
 import com.brandio.ads.placements.Placement;
 import com.brandio.ads.request.AdRequest;
-import com.brandio.androidsample.utils.DIOAdrequestHelper;
+import com.brandio.androidsample.tools.DIOAdRequestHelper;
+import com.brandio.androidsample.tools.DIOAdViewBinder;
 
 import java.util.ArrayDeque;
 
@@ -33,7 +35,9 @@ public class BannerAndMediumRectangleActivity extends AppCompatActivity {
     private RelativeLayout reservedForAd;
     private Button loadNewAd;
     private Button showAdFromQueue;
-    private final ArrayDeque<View> receivedAds = new ArrayDeque<>();
+    private Placement placement;
+    private Ad displayedAd;
+    private final ArrayDeque<Ad> receivedAds = new ArrayDeque<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,138 +48,107 @@ public class BannerAndMediumRectangleActivity extends AppCompatActivity {
         showAdFromQueue = findViewById(R.id.show_ad_from_queue);
 
         String placementId = getIntent().getStringExtra(MainActivity.PLACEMENT_ID);
-        String adUnitType = getIntent().getStringExtra(MainActivity.AD_UNIT_TYPE);
 
-        setupButtons(placementId, adUnitType);
-    }
-
-
-    private View getBannerView(String placementId, String requestId) {
-        ViewGroup bannerView = null;
-        BannerPlacement bannerPlacement = null;
         try {
-            bannerPlacement = ((BannerPlacement) Controller.getInstance().getPlacement(placementId));
-        } catch (DioSdkException e) {
+            placement = Controller.getInstance().getPlacement(placementId);
+            setupButtons();
+        } catch (Exception e) {
             e.printStackTrace();
+            Toast.makeText(BannerAndMediumRectangleActivity.this,
+                    "DioSdkException: " + e.getMessage(),
+                    Toast.LENGTH_SHORT).show();
         }
-        if (bannerPlacement != null) {
-            BannerContainer container = bannerPlacement.getContainer(this, requestId);
-            bannerView = InlineContainer.getAdView(this);
-            container.bindTo(bannerView);
-        }
-        return bannerView;
     }
 
-    private View getMrectView(String placementId, String requestId) {
-        ViewGroup mrectView = null;
-        MediumRectanglePlacement mediumRectanglePlacement = null;
-        try {
-            mediumRectanglePlacement = ((MediumRectanglePlacement) Controller.getInstance().getPlacement(placementId));
-        } catch (DioSdkException e) {
-            e.printStackTrace();
-        }
-        if (mediumRectanglePlacement != null) {
-            MediumRectangleContainer container = mediumRectanglePlacement.getContainer(this, requestId);
-            mrectView = InlineContainer.getAdView(this);
-            container.bindTo(mrectView);
-        }
-        return mrectView;
-    }
-
-    private void setupButtons(final String placementId, final String placementType) {
-
-        loadNewAd.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Placement placement;
-                try {
-                    placement = Controller.getInstance().getPlacement(placementId);
-                } catch (DioSdkException e) {
-                    e.printStackTrace();
-                    Toast.makeText(BannerAndMediumRectangleActivity.this,
-                            "DioSdkException: " + e.getMessage(),
-                            Toast.LENGTH_SHORT).show();
-                    return;
-                }
+    private void setupButtons() {
+        loadNewAd.setOnClickListener(v -> {
 
 //                final AdRequest adRequest = placement.newAdRequest(); // use default ad request
-                final AdRequest adRequest = DIOAdrequestHelper.createAndPopulateAdRequest(placement); // use customised ad request
-                adRequest.setAdRequestListener(new AdRequestListener() {
+            final AdRequest adRequest = DIOAdRequestHelper.createAndPopulateAdRequest(placement); // use customised ad request
+            adRequest.setAdRequestListener(new AdRequestListener() {
 
-                    @Override
-                    public void onAdReceived(Ad ad) {
-                        ad.setEventListener(new AdEventListener() {
-                            @Override
-                            public void onShown(Ad Ad) {
-                                Log.e(TAG, "onShown");
-                            }
-
-                            @Override
-                            public void onFailedToShow(Ad ad) {
-
-                            }
-
-                            @Override
-                            public void onClicked(Ad ad) {
-                                Log.e(TAG, "onClicked");
-                            }
-
-                            @Override
-                            public void onClosed(Ad ad) {
-                            }
-
-                            @Override
-                            public void onAdCompleted(Ad ad) {
-                            }
-                        });
-
-                        if (placementType.equals("BANNER")) {
-                            receivedAds.addLast(getBannerView(placementId, adRequest.getId()));
-                        } else {
-                            receivedAds.addLast(getMrectView(placementId, adRequest.getId()));
+                @Override
+                public void onAdReceived(Ad ad) {
+                    ad.setEventListener(new AdEventListener() {
+                        @Override
+                        public void onShown(Ad Ad) {
+                            Log.e(TAG, "onShown");
                         }
-                        Log.e(TAG, "adView added to queue, ads in queue = " + receivedAds.size());
-                        Toast.makeText(BannerAndMediumRectangleActivity.this,
-                                "adView added to queue, ads in queue = " + receivedAds.size(),
-                                Toast.LENGTH_SHORT).show();
-                    }
 
-                    @Override
-                    public void onNoAds(DIOError error) {
-                        Toast.makeText(BannerAndMediumRectangleActivity.this,
-                                "No ads",
-                                Toast.LENGTH_SHORT).show();
-                    }
+                        @Override
+                        public void onFailedToShow(Ad ad) {
 
-                    @Override
-                    public void onFailedToLoad(DIOError dioError) {
-                        Toast.makeText(BannerAndMediumRectangleActivity.this,
-                                "Failed to load ad ",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-                adRequest.requestAd();
-            }
-        });
+                        }
 
-        showAdFromQueue.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                View adView = receivedAds.poll();
-                if (adView != null) {
-                    reservedForAd.removeView(adView);
-                    reservedForAd.addView(adView);
-                    reservedForAd.setVisibility(View.VISIBLE);
-                } else {
-                    reservedForAd.removeView(adView);
-                    reservedForAd.setVisibility(View.GONE);
+                        @Override
+                        public void onClicked(Ad ad) {
+                            Log.e(TAG, "onClicked");
+                        }
 
-                    Log.e(TAG, "adView == null, ads in queue = " + receivedAds.size());
+                        @Override
+                        public void onClosed(Ad ad) {
+                        }
+
+                        @Override
+                        public void onAdCompleted(Ad ad) {
+                        }
+                    });
+
+                    receivedAds.addLast(ad);
+
                     Toast.makeText(BannerAndMediumRectangleActivity.this,
-                            "adView == null, ads in queue = " + receivedAds.size(),
+                            "Preloaded ads in queue = " + receivedAds.size(),
                             Toast.LENGTH_SHORT).show();
                 }
+
+                @Override
+                public void onNoAds(DIOError error) {
+                    Toast.makeText(BannerAndMediumRectangleActivity.this,
+                            "No ads",
+                            Toast.LENGTH_SHORT).show();
+                }
+
+                @Override
+                public void onFailedToLoad(DIOError dioError) {
+                    Toast.makeText(BannerAndMediumRectangleActivity.this,
+                            "Failed to load ad ",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+            adRequest.requestAd();
+        });
+
+        showAdFromQueue.setOnClickListener(v -> {
+            reservedForAd.removeAllViews();
+
+            if (displayedAd != null) {
+                displayedAd.close();
+            }
+            displayedAd = receivedAds.poll();
+            View adView = DIOAdViewBinder.getAdView(displayedAd, BannerAndMediumRectangleActivity.this);
+            if (adView != null) {
+                reservedForAd.addView(adView);
+                reservedForAd.setVisibility(View.VISIBLE);
+            } else {
+                reservedForAd.setVisibility(View.GONE);
+                Toast.makeText(BannerAndMediumRectangleActivity.this,
+                        "Load ad first",
+                        Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    //in case you do not need ads always call close on ad object to avoid memory leaks
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (displayedAd != null) {
+            displayedAd.close();
+        }
+        if (!receivedAds.isEmpty()) {
+            for (Ad ad : receivedAds) {
+                ad.close();
+            }
+        }
     }
 }

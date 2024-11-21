@@ -1,4 +1,4 @@
-package com.brandio.androidsample.utils;
+package com.brandio.androidsample.plc;
 
 import android.content.Context;
 import androidx.recyclerview.widget.RecyclerView;
