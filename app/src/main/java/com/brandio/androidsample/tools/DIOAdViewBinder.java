@@ -40,25 +40,25 @@ public class DIOAdViewBinder {
         switch (placement.getType()) {
             case BANNER: {
                 BannerPlacement bannerPlacement = (BannerPlacement) placement;
-                BannerContainer bannerContainer = bannerPlacement.getContainer(context, ad.getRequestId());
+                BannerContainer bannerContainer = bannerPlacement.getContainer(ad.getRequestId());
                 bannerContainer.bindTo(holder);
                 break;
             }
             case MEDIUMRECTANGLE: {
                 MediumRectanglePlacement mediumRectanglePlacement = (MediumRectanglePlacement) placement;
-                MediumRectangleContainer mediumRectangleContainer = mediumRectanglePlacement.getContainer(context, ad.getRequestId());
+                MediumRectangleContainer mediumRectangleContainer = mediumRectanglePlacement.getContainer(ad.getRequestId());
                 mediumRectangleContainer.bindTo(holder);
                 break;
             }
             case INFEED: {
                 InfeedPlacement infeedPlacement = (InfeedPlacement) placement;
-                InfeedContainer infeedContainer = infeedPlacement.getContainer(context, ad.getRequestId());
+                InfeedContainer infeedContainer = infeedPlacement.getContainer(ad.getRequestId());
                 infeedContainer.bindTo(holder);
                 break;
             }
             case INTERSCROLLER: {
                 InterscrollerPlacement interscrollerPlacement = (InterscrollerPlacement) placement;
-                InterscrollerContainer interscrollerContainer = interscrollerPlacement.getContainer(context, ad.getRequestId());
+                InterscrollerContainer interscrollerContainer = interscrollerPlacement.getContainer(ad.getRequestId());
                 interscrollerContainer.bindTo(holder);
                 break;
             }

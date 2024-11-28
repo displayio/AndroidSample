@@ -76,7 +76,7 @@ class ComposeFeedActivity : ComponentActivity() {
             DIOAdRequestHelper.createAndPopulateAdRequest(placement)
         adRequest.setAdRequestListener(object : AdRequestListener {
             override fun onAdReceived(ad: Ad) {
-                ad.setEventListener(object : AdEventListener() {
+                ad.setEventListener(object : AdEventListener {
                     override fun onShown(ad: Ad) {
                         Log.e(TAG, "onShown")
                     }

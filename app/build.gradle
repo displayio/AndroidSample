@@ -65,10 +65,12 @@ dependencies {
     implementation "androidx.multidex:multidex:2.0.1"
 
     //add dependency to DIO SDK
-    implementation 'com.brandio.ads:sdk:5.3.6'
+    implementation 'com.brandio.ads:sdk:5.3.7'
 
     androidTestImplementation platform('androidx.compose:compose-bom:2024.04.01')
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest'
+
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:2.14'
 }
