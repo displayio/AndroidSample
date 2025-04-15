@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onInit() {
                 Toast.makeText(MainActivity.this,
-                                "DIO SDK initialized",
+                                "DIO SDK initialized, version : " + ctrl.getVer(),
                                 Toast.LENGTH_LONG)
                         .show();
                 postInit();
