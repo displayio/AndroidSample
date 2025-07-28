@@ -2,12 +2,12 @@ apply plugin: 'com.android.application'
 apply plugin: 'org.jetbrains.kotlin.android'
 
 android {
-    compileSdk 34
+    compileSdk 36
     defaultConfig {
         applicationId "com.brandio.androidsample"
         multiDexEnabled true
         minSdkVersion 21
-        targetSdkVersion 34
+        targetSdkVersion 36
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner 'androidx.test.runner.AndroidJUnitRunner'
@@ -65,7 +65,7 @@ dependencies {
     implementation "androidx.multidex:multidex:2.0.1"
 
     //add dependency to DIO SDK
-    implementation 'com.brandio.ads:sdk:5.5.0'
+    implementation 'com.brandio.ads:sdk:5.5.2'
 
     androidTestImplementation platform('androidx.compose:compose-bom:2024.04.01')
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
