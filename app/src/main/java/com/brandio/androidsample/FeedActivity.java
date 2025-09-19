@@ -75,7 +75,7 @@ public class FeedActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailedToShow(Ad ad) {
+                    public void onFailedToShow(Ad ad, DIOError error) {
                         Log.e(TAG, "onFailedToShow");
                     }
 

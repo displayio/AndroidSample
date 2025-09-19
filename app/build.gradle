@@ -1,5 +1,8 @@
-apply plugin: 'com.android.application'
-apply plugin: 'org.jetbrains.kotlin.android'
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'org.jetbrains.kotlin.plugin.compose'
+}
 
 android {
     compileSdk 36
@@ -15,6 +18,7 @@ android {
             useSupportLibrary true
         }
     }
+
     buildTypes {
         release {
             minifyEnabled true
@@ -35,9 +39,6 @@ android {
     }
     buildFeatures {
         compose true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion '1.5.1'
     }
     packaging {
         resources {
@@ -65,7 +66,7 @@ dependencies {
     implementation "androidx.multidex:multidex:2.0.1"
 
     //add dependency to DIO SDK
-    implementation 'com.brandio.ads:sdk:5.5.2'
+    implementation 'com.brandio.ads:sdk:5.5.3'
 
     androidTestImplementation platform('androidx.compose:compose-bom:2024.04.01')
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4'

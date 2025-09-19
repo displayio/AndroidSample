@@ -76,7 +76,7 @@ public class BannerAndMediumRectangleActivity extends AppCompatActivity {
                         }
 
                         @Override
-                        public void onFailedToShow(Ad ad) {
+                        public void onFailedToShow(Ad ad, DIOError error) {
 
                         }
 

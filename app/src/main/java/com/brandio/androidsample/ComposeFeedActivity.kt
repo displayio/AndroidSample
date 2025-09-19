@@ -81,7 +81,7 @@ class ComposeFeedActivity : ComponentActivity() {
                         Log.e(TAG, "onShown")
                     }
 
-                    override fun onFailedToShow(ad: Ad) {
+                    override fun onFailedToShow(ad: Ad, error: DIOError) {
                         Log.e(TAG, "onFailedToShow")
                     }
 
