@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.brandio.ads.Controller;
 import com.brandio.ads.ads.Ad;
@@ -31,6 +33,10 @@ public class InterstitialActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_interstitial);
+        Toolbar toolbar = findViewById(R.id.toolbar_interstitial);
+        setSupportActionBar(toolbar);
+        TextView toolbarTitle = findViewById(R.id.toolbar_title_interstitial);
+        toolbarTitle.setText("Interstitial");
 
         placementId = getIntent().getStringExtra(MainActivity.PLACEMENT_ID);
 

@@ -16,7 +16,9 @@
         <activity
             android:name=".ViewPagerActivity"
             android:exported="false" />
-        <activity android:name=".BannerAndMediumRectangleActivity" />
+        <activity
+            android:name=".BannerAndMediumRectangleActivity"
+            android:theme="@style/AppTheme.DefaultTheme" />
         <activity
             android:name=".FeedActivity"
             android:theme="@style/AppTheme.NoActionBar" />
@@ -29,7 +31,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".InterstitialActivity" />
+        <activity
+            android:name=".InterstitialActivity"
+            android:theme="@style/AppTheme.DefaultTheme" />
     </application>
 
 </manifest>

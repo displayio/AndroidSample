@@ -57,7 +57,7 @@ public class FeedActivity extends AppCompatActivity {
         adapter = new RecyclerViewAdapter(dataSet);
         recyclerView.setAdapter(adapter);
 
-        for (int i = 1; i <= 10; i++) {
+        for (int i = 1; i < 5; i++) {
             loadAd(i);
         }
     }
@@ -68,6 +68,7 @@ public class FeedActivity extends AppCompatActivity {
         adRequest.setAdRequestListener(new AdRequestListener() {
             @Override
             public void onAdReceived(Ad ad) {
+                Log.e(TAG, "onAdReceived");
                 ad.setEventListener(new AdEventListener() {
                     @Override
                     public void onShown(Ad ad) {
@@ -101,12 +102,16 @@ public class FeedActivity extends AppCompatActivity {
 
             @Override
             public void onNoAds(DIOError error) {
+                Log.e(TAG, "onNoAds");
+
                 Toast.makeText(FeedActivity.this,
                         "No Ads placement " + placement.getId(), Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onFailedToLoad(DIOError dioError) {
+                Log.e(TAG, "onFailedToLoad");
+
                 Toast.makeText(FeedActivity.this,
                         "Ad for placement " + placement.getId() + " failed to load", Toast.LENGTH_LONG).show();
 

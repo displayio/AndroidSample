@@ -6,10 +6,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import com.brandio.ads.Controller;
 import com.brandio.ads.ads.Ad;
@@ -43,6 +45,11 @@ public class BannerAndMediumRectangleActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_banner_and_medium_rectangle);
+        Toolbar toolbar = findViewById(R.id.toolbar_banner);
+        setSupportActionBar(toolbar);
+        TextView toolbarTitle = findViewById(R.id.toolbar_title_banner);
+        toolbarTitle.setText("Banner/Medium Rectangle");
+
         reservedForAd = findViewById(R.id.reserved_for_ad);
         loadNewAd = findViewById(R.id.load_new_ad);
         showAdFromQueue = findViewById(R.id.show_ad_from_queue);

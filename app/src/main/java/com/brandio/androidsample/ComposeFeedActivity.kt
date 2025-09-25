@@ -66,7 +66,7 @@ class ComposeFeedActivity : ComponentActivity() {
             ).show()
             return
         }
-        for (i in 1..10) {
+        for (i in 1..5) {
             loadAd(i)
         }
     }
@@ -81,7 +81,7 @@ class ComposeFeedActivity : ComponentActivity() {
                         Log.e(TAG, "onShown")
                     }
 
-                    override fun onFailedToShow(ad: Ad, error: DIOError) {
+                     override fun onFailedToShow(ad: Ad, error: DIOError) {
                         Log.e(TAG, "onFailedToShow")
                     }
 
