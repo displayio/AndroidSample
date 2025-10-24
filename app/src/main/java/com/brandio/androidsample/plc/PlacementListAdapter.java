@@ -47,7 +47,7 @@ public class PlacementListAdapter extends RecyclerView.Adapter<PlacementListAdap
             super(v);
 
             textId = v.findViewById(R.id.text_id);
-            textType = v.findViewById(R.id.text_type);
+            textType = v.findViewById(R.id.text_unit_type);
         }
     }
 }

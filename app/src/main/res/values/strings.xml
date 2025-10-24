@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">display.io sample app</string>
-    <string name="title_activity_compose_feed">ComposeFeedActivity</string>
+    <string name="display_io">Display.io</string>
+
+    <string name="divider">|</string>
+    <string name="test_app">Demo Application</string>
+    <string name="initialize_sdk">Initialize SDK</string>
 </resources>

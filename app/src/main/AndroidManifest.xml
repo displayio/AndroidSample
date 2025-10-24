@@ -11,7 +11,6 @@
         <activity
             android:name=".ComposeFeedActivity"
             android:exported="false"
-            android:label="@string/title_activity_compose_feed"
             android:theme="@style/MainAppTheme" />
         <activity
             android:name=".ViewPagerActivity"
