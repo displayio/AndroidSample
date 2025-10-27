@@ -84,11 +84,13 @@ public class InterstitialActivity extends AppCompatActivity {
 
             @Override
             public void onNoAds(DIOError error) {
+                loadButton.setEnabled(true);
                 Toast.makeText(InterstitialActivity.this, "No Ads placement " + placementId, Toast.LENGTH_LONG).show();
             }
 
             @Override
             public void onFailedToLoad(DIOError dioError) {
+                loadButton.setEnabled(true);
                 Toast.makeText(InterstitialActivity.this, "Ad for placement " + placementId + " failed to load", Toast.LENGTH_LONG).show();
 
             }
