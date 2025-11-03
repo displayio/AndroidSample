@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         Controller ctrl = Controller.getInstance();
         if (ctrl.isInitialized()) {
             hideLoader();
+            btnInitialize.setVisibility(GONE);
             postInit();
             return;
         }
