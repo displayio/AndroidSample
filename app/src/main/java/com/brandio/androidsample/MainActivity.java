@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
             new PlacementListItem(INTERSCROLLER_DISPLAY_ID, AdUnitType.INTERSCROLLER, "Interscroller (ViewPager)"),
             new PlacementListItem(INTERSCROLLER_DISPLAY_ID, AdUnitType.INTERSCROLLER, "Interscroller ORTB (ViewPager)"),
             new PlacementListItem(INFEED_VIDEO_ID, AdUnitType.INFEED, "Infeed Video (Compose)"),
-            new PlacementListItem(INTERSCROLLER_DISPLAY_ID, AdUnitType.INTERSCROLLER, "Interscroller Display (Compose)"),
+//            new PlacementListItem(INTERSCROLLER_DISPLAY_ID, AdUnitType.INTERSCROLLER, "Interscroller Display (Compose)"),
     };
 
     private Button btnInitialize;
