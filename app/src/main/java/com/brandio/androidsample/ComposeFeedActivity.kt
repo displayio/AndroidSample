@@ -13,10 +13,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import com.brandio.ads.Controller
@@ -24,6 +26,7 @@ import com.brandio.ads.ads.Ad
 import com.brandio.ads.exceptions.DIOError
 import com.brandio.ads.listeners.AdEventListener
 import com.brandio.ads.listeners.AdRequestListener
+import com.brandio.ads.placements.InterscrollerPlacement
 import com.brandio.ads.placements.Placement
 import com.brandio.androidsample.tools.DIOAdRequestHelper
 import com.brandio.androidsample.tools.DIOAdViewBinder
@@ -45,9 +48,13 @@ class ComposeFeedActivity : ComponentActivity() {
                 Scaffold(
                     modifier = Modifier.fillMaxSize(),
                     content = { innerPadding ->
+                        val topOffsetPx = with(LocalDensity.current) {
+                            innerPadding.calculateTopPadding().toPx()
+                        }
                         ItemList(
                             items = receivedAds,
-                            modifier = Modifier.padding(innerPadding)
+                            modifier = Modifier.padding(innerPadding),
+                            topOffset = topOffsetPx
                         )
                     }
                 )
@@ -128,13 +135,34 @@ class ComposeFeedActivity : ComponentActivity() {
 }
 
 @Composable
-fun ItemList(items: List<Ad?>, modifier: Modifier = Modifier) {
+fun ItemList(items: List<Ad?>, modifier: Modifier = Modifier, topOffset: Float = 0f) {
+    val listState = rememberLazyListState()
     LazyColumn(
+        state = listState,
         modifier = modifier
     ) {
         items(items.size) { index ->
-            ListItem(ad = items[index])
+            val ad = items[index]
+            if (ad != null && isInterscrollerAd(ad)) {
+                InterscrollerComposable(
+                    placementId = ad.placementId,
+                    requestId = ad.requestId,
+                    listState = listState,
+                    topOffset = topOffset
+                )
+            } else {
+                ListItem(ad = ad)
+            }
         }
+    }
+}
+
+private fun isInterscrollerAd(ad: Ad): Boolean {
+    return try {
+        val placement = Controller.getInstance().getPlacement(ad.placementId)
+        placement is InterscrollerPlacement
+    } catch (e: Exception) {
+        false
     }
 }
 
