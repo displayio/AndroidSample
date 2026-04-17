@@ -6,3 +6,8 @@
 /build
 /captures
 .externalNativeBuild
+
+.claude/
+CLAUDE.md
+.claude.json
+.mcp.json

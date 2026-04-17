@@ -167,6 +167,7 @@ public class ViewPagerActivity extends AppCompatActivity {
                 "                {\n" +
                 "                    \"id\": \"12345\",\n" +
                 "                    \"impid\": \"6452af6d894ce\",\n" +
+                "                    \"mtype\": 2,\n" +
                 "                    \"price\": 4.034800000000001,\n" +
                 "                    \"nurl\": \"http:\\/\\/example.com\\/winnoticeurl&price=${AUCTION_PRICE}&id=${AUCTION_ID}&impid=${AUCTION_IMP_ID}&bidid=${AUCTION_BID_ID}&seatid=${AUCTION_SEAT_ID}&curr=${AUCTION_CURRENCY}\",\n" +
                 "                    \"adm\": \"<?xml version=\\\"1.0\\\"?>\\n<VAST version=\\\"3.0\\\"> " +
