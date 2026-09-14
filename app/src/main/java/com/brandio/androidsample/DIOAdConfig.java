@@ -12,4 +12,6 @@ public class DIOAdConfig {
     public static final String MEDIUM_RECTANGLE_ID = "6429";
     public static final String INTERSCROLLER_VIDEO_ID = "6735";
     public static final String INTERSCROLLER_DISPLAY_ID = "6430";
+    public static final String NATIVE_ID = "16215";
+    public static final String INGAME_AUDIO_ID = "16202";
 }

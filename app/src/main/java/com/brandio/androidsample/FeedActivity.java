@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.brandio.ads.Controller;
 import com.brandio.ads.ads.Ad;
+import com.brandio.ads.ads.supers.NativeAdInterface;
 import com.brandio.ads.exceptions.DIOError;
 import com.brandio.ads.listeners.AdEventListener;
 import com.brandio.ads.listeners.AdRequestListener;
@@ -125,6 +126,9 @@ public class FeedActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         for (Ad ad : receivedAds) {
+            if (ad instanceof NativeAdInterface) {
+                ((NativeAdInterface) ad).unregisterView();
+            }
             ad.close();
         }
     }

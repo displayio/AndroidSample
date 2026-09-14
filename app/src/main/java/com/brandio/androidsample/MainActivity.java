@@ -6,17 +6,20 @@ import static com.brandio.androidsample.DIOAdConfig.APP_ID;
 import static com.brandio.androidsample.DIOAdConfig.BANNER_ID;
 import static com.brandio.androidsample.DIOAdConfig.INFEED_DISPLAY_ID;
 import static com.brandio.androidsample.DIOAdConfig.INFEED_VIDEO_ID;
+import static com.brandio.androidsample.DIOAdConfig.INGAME_AUDIO_ID;
 import static com.brandio.androidsample.DIOAdConfig.INTERSCROLLER_DISPLAY_ID;
 import static com.brandio.androidsample.DIOAdConfig.INTERSCROLLER_VIDEO_ID;
 import static com.brandio.androidsample.DIOAdConfig.INTERSTITIAL_DISPLAY_ID;
 import static com.brandio.androidsample.DIOAdConfig.INTERSTITIAL_VIDEO_ID;
 import static com.brandio.androidsample.DIOAdConfig.MEDIUM_RECTANGLE_ID;
+import static com.brandio.androidsample.DIOAdConfig.NATIVE_ID;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -24,17 +27,26 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.brandio.ads.Controller;
+import com.brandio.ads.ads.Ad;
+import com.brandio.ads.ads.AdUnit;
 import com.brandio.ads.ads.AdUnitType;
+import com.brandio.ads.containers.InGameAudioContainer;
 import com.brandio.ads.exceptions.DIOError;
+import com.brandio.ads.listeners.AdEventListener;
+import com.brandio.ads.listeners.AdRequestListener;
 import com.brandio.ads.listeners.SdkInitListener;
+import com.brandio.ads.placements.InGameAudioPlacement;
+import com.brandio.ads.request.AdRequest;
 import com.brandio.androidsample.plc.PlacementListAdapter;
 import com.brandio.androidsample.plc.PlacementListItem;
 import com.brandio.androidsample.plc.RecyclerTouchListener;
+import com.brandio.androidsample.tools.DIOAdRequestHelper;
 
 import java.util.Objects;
 
@@ -57,10 +69,13 @@ public class MainActivity extends AppCompatActivity {
             new PlacementListItem(INTERSCROLLER_DISPLAY_ID, AdUnitType.INTERSCROLLER, "Interscroller ORTB (ViewPager)"),
             new PlacementListItem(INFEED_VIDEO_ID, AdUnitType.INFEED, "Infeed Video (Compose)"),
             new PlacementListItem(INTERSCROLLER_DISPLAY_ID, AdUnitType.INTERSCROLLER, "Interscroller Display (Compose)"),
+            new PlacementListItem(NATIVE_ID, AdUnitType.NATIVE, "Native (Feed)"),
+            new PlacementListItem(INGAME_AUDIO_ID, AdUnitType.INGAMEAUDIO, "In-Game Audio"),
     };
 
     private Button btnInitialize;
     private ProgressBar loader;
+    private Ad inGameAudioAd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -119,7 +134,8 @@ public class MainActivity extends AppCompatActivity {
 
                 switch (data[position].type) {
                     case INFEED:
-                    case INTERSCROLLER: {
+                    case INTERSCROLLER:
+                    case NATIVE: {
                         String name = data[position].name;
                         Class<? extends Activity> clazz;
                         if (name.contains("Compose")) {
@@ -151,6 +167,12 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(intent);
                         break;
                     }
+
+                    // in-game audio card is bound right into this screen, on top of the list
+                    case INGAMEAUDIO: {
+                        loadInGameAudioAd(data[position].id);
+                        break;
+                    }
                 }
             }
 
@@ -158,6 +180,83 @@ public class MainActivity extends AppCompatActivity {
             public void onLongClick(View view, int position) {
             }
         }));
+    }
+
+    private void loadInGameAudioAd(String placementId) {
+        final InGameAudioPlacement placement;
+        try {
+            placement = (InGameAudioPlacement) Controller.getInstance().getPlacement(placementId);
+        } catch (Exception e) {
+            Toast.makeText(this, "DioSdkException: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            return;
+        }
+//        placement.setCustomWidth(200); // uncomment to test a custom card size
+
+        // only one card at a time: close() also removes the card view from the hierarchy
+        if (inGameAudioAd != null) {
+            inGameAudioAd.close();
+        }
+
+//        final AdRequest adRequest = placement.newAdRequest(); // use default ad request
+        final AdRequest adRequest = DIOAdRequestHelper.createAndPopulateAdRequest(placement);
+        adRequest.setAdRequestListener(new AdRequestListener() {
+            @Override
+            public void onAdReceived(Ad ad) {
+                ad.setEventListener(new AdEventListener() {
+                    @Override
+                    public void onShown(Ad ad) {
+                        Log.d(TAG, "in-game audio onShown");
+                    }
+
+                    @Override
+                    public void onFailedToShow(Ad ad, DIOError error) {
+                        Log.e(TAG, "in-game audio onFailedToShow");
+                    }
+
+                    @Override
+                    public void onClicked(Ad ad) {
+                        Log.d(TAG, "in-game audio onClicked");
+                    }
+
+                    @Override
+                    public void onClosed(Ad ad) {
+                        Log.d(TAG, "in-game audio onClosed");
+                        if (inGameAudioAd == ad) {
+                            inGameAudioAd = null;
+                        }
+                    }
+
+                    @Override
+                    public void onAdCompleted(Ad ad) {
+                    }
+                });
+
+                inGameAudioAd = ad;
+
+                // top right corner of the screen, over the placement list
+                ConstraintLayout root = findViewById(R.id.main_root);
+                ConstraintLayout.LayoutParams params = new ConstraintLayout.LayoutParams(
+                        ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+                params.topToBottom = R.id.app_bar_layout;
+                params.endToEnd = ConstraintLayout.LayoutParams.PARENT_ID;
+                params.topMargin = AdUnit.dpToPx(16);
+                params.setMarginEnd(AdUnit.dpToPx(16));
+
+                InGameAudioContainer container = placement.getContainer(ad.getRequestId());
+                container.bindTo(root, params);
+            }
+
+            @Override
+            public void onNoAds(DIOError error) {
+                Toast.makeText(MainActivity.this, "No ads", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailedToLoad(DIOError error) {
+                Toast.makeText(MainActivity.this, "Failed to load ad", Toast.LENGTH_SHORT).show();
+            }
+        });
+        adRequest.requestAd();
     }
 
     private void setupView() {
